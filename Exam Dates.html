@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBPS 2025-26 All Exams Important Dates & Task Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2F2F2;
+            color: #003F5C;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #6B9DB3;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12.5px;
+            background-color: #003F5C;
+            border: 4px solid white;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .left {
+            left: 0;
+        }
+        .right {
+            left: 50%;
+        }
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid white;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent white;
+        }
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid white;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent white transparent transparent;
+        }
+        .right::after {
+            left: -12.5px;
+        }
+        .content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        @media screen and (max-width: 767px) {
+            .timeline-container::after {
+                left: 31px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-item::before {
+                left: 60px;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+            .left::after, .right::after {
+                left: 18px;
+            }
+            .left, .right {
+                left: 0%;
+            }
+        }
+        .task-completed {
+            text-decoration: line-through;
+            color: #6B9DB3;
+        }
+        /* Table row styling for readability */
+        table tbody tr:nth-child(odd) {
+            background-color: #F8F8F8; /* Lighter background for odd rows */
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #FFFFFF; /* White background for even rows */
+        }
+        table tbody tr:hover {
+            background-color: #E6F2F7; /* Hover effect for all rows */
+        }
+        .message-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50; /* Green for success */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .message-box.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-[#003F5C] mb-4">Your 2025-26 Banking Exam Calendar & Task Tracker</h1>
+            <p class="text-lg text-[#366E8A]">A visual guide to all key dates for Graduate-level IBPS exams and your personalized task manager.</p>
+        </header>
+
+        <main>
+            <section id="exam-timeline" class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-8 text-[#003F5C]">Important Exam Dates</h2>
+                <div class="timeline-container">
+                    <div class="timeline-item left">
+                        <div class="content">
+                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS Specialist Officer (IT)</h3>
+                            <p class="text-sm text-[#366E8A]">Notification Release: June 30, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Online Application: July 1 - July 21, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Prelims Exam: August 30, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Mains Exam: November 9, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Interview: To be announced</p>
+                            <p class="text-sm text-[#366E8A]">Provisional Allotment: To be announced</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="content">
+                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS Probationary Officer (PO)</h3>
+                            <p class="text-sm text-[#366E8A]">Notification Release: June 30, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Online Application: July 1 - July 21, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Prelims Exam: August 17, 23, 24, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Mains Exam: October 12, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Interview: November-December 2025</p>
+                            <p class="text-sm text-[#366E8A]">Final Result: January-February 2026</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="content">
+                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS Clerk (Customer Service Associates)</h3>
+                            <p class="text-sm text-[#366E8A]">Notification Release: Expected July 2025</p>
+                            <p class="text-sm text-[#366E8A]">Online Application: Expected July 3 - August 3, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Prelims Exam: October 4, 5, 11, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Mains Exam: November 29, 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="content">
+                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS RRB Officer Scale I (PO)</h3>
+                            <p class="text-sm text-[#366E8A]">Notification Release: Expected September 2025</p>
+                            <p class="text-sm text-[#366E8A]">Online Application: Expected July 31 - August 29, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Prelims Exam: November 22, 23, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Mains Exam: December 28, 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="content">
+                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS RRB Office Assistant (Clerk)</h3>
+                            <p class="text-sm text-[#366E8A]">Prelims Exam: December 5, 7, 13, 14, 2025</p>
+                            <p class="text-sm text-[#366E8A]">Mains Exam: February 1, 2026</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="daily-study-schedule" class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-8 text-[#003F5C]">Your Detailed Daily Study Schedule</h2>
+                <div class="card overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                        <thead class="bg-[#A7D5E5] text-[#003F5C] uppercase text-sm leading-normal">
+                            <tr>
+                                <th class="py-3 px-6 text-left">Time Slot</th>
+                                <th class="py-3 px-6 text-left">Subject Focus</th>
+                                <th class="py-3 px-6 text-left">Specific Topics/Activities</th>
+                                <th class="py-3 px-6 text-left">Daily Practice Targets</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-[#366E8A] text-sm font-light">
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">New tricks (02:00 AM - 04:30 AM)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Maths tricks and Reasoning important data</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Simplification/Approximation/Number Series (Practice 30-40 questions)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">4 Viral maths videos</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Morning (07:30 AM - 10:30 AM)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Reasoning Ability (3 hours)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">7:30 AM - 9:00 AM: Puzzles (2-3 sets daily) & Seating Arrangements (2-3 sets daily)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">60-80 questions</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">9:00 AM - 10:00 AM: Syllogism/Inequalities (Practice 20-30 questions)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">(Emphasis on 2-3 sets of high-level puzzles/seating arrangements)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">10:00 AM - 10:30AM: Miscellaneous Reasoning (Blood Relations, Direction Sense, Coding-Decoding) (Practice 20-30 questions)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Late Morning (10:30 AM - 12:30 PM)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Quantitative Aptitude (2 hours)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">10:30 AM - 11:30 AM: Data Interpretation (2-3 sets daily)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">50-70 questions(Including 2-3 DI sets and a mix of other topics)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">11:30 AM - 12:30 PM: Arithmetic Topics (Focus on one topic per day, e.g., Profit & Loss, Time & Work) (Practice 20-25 questions)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Lunch & Rest (12:30 PM - 01:30 PM)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Afternoon (1:30 PM - 5:00 PM)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">English Language (3.5 hours)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">1:30 PM - 4:00 PM: Grammar Rules</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">40-50 questions</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">4:00 PM - 5:00 PM: Reading Comprehension (2-3 passages daily)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">(Including 2-3 RC passages and a mix of grammar/vocabulary)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Short Break (5:00 PM - 5:30 PM)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Evening (5:30 PM - 8:30 PM)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Professional Knowledge (IT) / General Awareness & Banking Awareness (2 hours)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">5:30 PM - 6:30 PM: IT Professional Knowledge (Focus on 1-2 topics from Mains syllabus daily, e.g., DBMS, Networking fundamentals)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">15-20 conceptual questions for IT PK</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">6:30 PM - 8:30 PM: Current Affairs & Banking Awareness (Daily reading of editorials, monthly PDFs, banking terms)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Continuous learning, note-taking</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Night (8:30 PM - 10:00 PM)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Mock Test Analysis / Revision (1 hour)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Alternate days: Full-length Prelims Mock Test (timed, 1 hour)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Detailed analysis of mock tests, revision of weak areas</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">On non-mock days: Detailed analysis of previous mock tests, revisiting weak areas, revising formulas/shortcuts</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Daily: Quick revision of notes, especially for high-frequency questions</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="task-manager" class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-8 text-[#003F5C]">Your Study Task Manager</h2>
+
+                <div class="card mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Add New Task</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label for="taskNameInput" class="block text-sm font-medium text-[#366E8A] mb-1">Task Name</label>
+                            <input type="text" id="taskNameInput" placeholder="e.g., Complete DI set"
+                                class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none">
+                        </div>
+                        <div>
+                            <label for="subjectInput" class="block text-sm font-medium text-[#366E8A] mb-1">Subject</label>
+                            <select id="subjectInput"
+                                class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none bg-white">
+                                <option value="">Select Subject</option>
+                                <option value="Quant">Quant</option>
+                                <option value="Reasoning">Reasoning</option>
+                                <option value="English">English</option>
+                                <option value="CA">Current Affairs</option>
+                                <option value="Computer Knowledge">Computer Knowledge</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button id="addTaskBtn"
+                                class="w-full bg-[#003F5C] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] focus:outline-none focus:ring-2 focus:ring-[#003F5C] focus:ring-offset-2 transition duration-200 ease-in-out">
+                                Add Task
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Your Schedule</h3>
+                    <div class="flex justify-center space-x-4 mb-4">
+                        <button id="dailyViewBtn" class="bg-[#A7D5E5] text-[#003F5C] py-2 px-4 rounded-md hover:bg-[#6B9DB3] hover:text-white transition duration-200 ease-in-out">Daily View</button>
+                        <button id="weeklyViewBtn" class="bg-[#A7D5E5] text-[#003F5C] py-2 px-4 rounded-md hover:bg-[#6B9DB3] hover:text-white transition duration-200 ease-in-out">Weekly View</button>
+                        <button id="allTasksViewBtn" class="bg-[#A7D5E5] text-[#003F5C] py-2 px-4 rounded-md hover:bg-[#6B9DB3] hover:text-white transition duration-200 ease-in-out">All Tasks</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table id="scheduleTable" class="min-w-full bg-white rounded-lg overflow-hidden">
+                            <thead class="bg-[#A7D5E5] text-[#003F5C] uppercase text-sm leading-normal">
+                                <tr>
+                                    <th class="py-3 px-6 text-left">Task</th>
+                                    <th class="py-3 px-6 text-left">Subject</th>
+                                    <th class="py-3 px-6 text-left">Due Date</th>
+                                    <th class="py-3 px-6 text-center">Status</th>
+                                    <th class="py-3 px-6 text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scheduleTableBody" class="text-[#366E8A] text-sm font-light">
+                                <!-- Tasks will be rendered here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Subject Progress</h3>
+                    <div id="subjectProgressContainer" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center">
+                        <!-- Subject progress cards will be rendered here by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="card mb-8">
+                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Your Progress Dashboard</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        <div class="p-4 bg-[#A7D5E5] rounded-md">
+                            <p class="text-sm font-semibold text-[#003F5C]">Total Tasks</p>
+                            <p id="totalTasksDisplay" class="text-3xl font-bold text-[#003F5C]">0</p>
+                        </div>
+                        <div class="p-4 bg-[#A7D5E5] rounded-md">
+                            <p class="text-sm font-semibold text-[#003F5C]">Completed Tasks</p>
+                            <p id="completedTasksDisplay" class="text-3xl font-bold text-[#003F5C]">0</p>
+                        </div>
+                        <div class="p-4 bg-[#A7D5E5] rounded-md">
+                            <p class="text-sm font-semibold text-[#003F5C]">Completion Rate</p>
+                            <p id="completionPercentageDisplay" class="text-3xl font-bold text-[#003F5C]">0%</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-center space-x-4 mt-6">
+                        <button id="dailyReportBtn" class="bg-[#003F5C] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] transition duration-200 ease-in-out">Daily Report</button>
+                        <button id="weeklyReportBtn" class="bg-[#003F5C] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] transition duration-200 ease-in-out">Weekly Report</button>
+                    </div>
+                    <div class="flex justify-center mt-6">
+                        <button id="saveDataBtn" class="bg-[#6B9DB3] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] transition duration-200 ease-in-out">Save Data (CSV)</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        let tasks = [];
+        let currentView = 'daily'; // Default view
+        let currentSubjectFilter = 'all'; // Default subject filter
+
+        const subjects = ["Quant", "Reasoning", "English", "CA", "Computer Knowledge"];
+
+        // Helper to format date for display (DD/MM/YY)
+        function formatDateForDisplay(dateString) {
+            if (!dateString) return '';
+            const [year, month, day] = dateString.split('-');
+            return `${day}/${month}/${year.slice(2)}`; // Slice to get last two digits of year
+        }
+
+        // Helper to get today's date in YYYY-MM-DD format
+        function getTodayDateString() {
+            const today = new Date();
+            return today.toISOString().split('T')[0];
+        }
+
+        // Helper to get the start of the week (Monday) in YYYY-MM-DD format
+        function getStartOfWeek(dateString) {
+            const d = new Date(dateString);
+            const day = d.getDay(); // 0 for Sunday, 1 for Monday
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday start
+            const startOfWeek = new Date(d.setDate(diff));
+            return startOfWeek.toISOString().split('T')[0];
+        }
+
+        // Function to save tasks to localStorage
+        function saveTasks() {
+            localStorage.setItem('ibpsTasks', JSON.stringify(tasks));
+            localStorage.setItem('lastAccessDate', getTodayDateString()); // Update last access date
+        }
+
+        // Function to load tasks from localStorage and apply daily cleanup logic
+        function loadTasks() {
+            const storedTasks = localStorage.getItem('ibpsTasks');
+            if (storedTasks) {
+                tasks = JSON.parse(storedTasks);
+            }
+
+            const todayString = getTodayDateString();
+            const lastAccessDate = localStorage.getItem('lastAccessDate');
+
+            // If it's a new day, filter out completed tasks from previous days
+            if (lastAccessDate && lastAccessDate !== todayString) {
+                tasks = tasks.filter(task => {
+                    // Keep tasks that are not completed OR are due today/in the future
+                    // This means completed tasks from previous days are removed from the active list
+                    return !task.completed || task.originalDate >= todayString;
+                });
+            }
+            saveTasks(); // Save tasks (after any filtering) and update lastAccessDate
+        }
+
+        // Function to filter tasks based on the current view and subject filter
+        function getFilteredTasks() {
+            const todayString = getTodayDateString();
+            let filtered = [];
+
+            // First, filter by date view (daily, weekly, all)
+            if (currentView === 'daily') {
+                // Daily view shows only uncompleted tasks due today
+                filtered = tasks.filter(task => task.originalDate === todayString && !task.completed);
+            } else if (currentView === 'weekly') {
+                const startOfWeekString = getStartOfWeek(todayString);
+                const endOfWeek = new Date(startOfWeekString);
+                endOfWeek.setDate(endOfWeek.getDate() + 6); // End of week (Sunday)
+                const endOfWeekString = endOfWeek.toISOString().split('T')[0];
+
+                // Weekly view shows all tasks due this week, regardless of completion status
+                filtered = tasks.filter(task => {
+                    return task.originalDate >= startOfWeekString && task.originalDate <= endOfWeekString;
+                });
+            } else { // 'all'
+                // All tasks view shows all tasks, regardless of date or completion status
+                filtered = tasks;
+            }
+
+            // Then, apply subject filter if one is selected
+            if (currentSubjectFilter !== 'all') {
+                filtered = filtered.filter(task => task.subject === currentSubjectFilter);
+            }
+
+            // Sort tasks by due date (ascending)
+            filtered.sort((a, b) => {
+                if (a.originalDate < b.originalDate) return -1;
+                if (a.originalDate > b.originalDate) return 1;
+                return 0; // If dates are the same, maintain original order
+            });
+
+            return filtered;
+        }
+
+        // Function to render tasks in the table and update dashboard
+        function renderTasks() {
+            const tableBody = document.getElementById('scheduleTableBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            const filteredTasks = getFilteredTasks();
+
+            if (filteredTasks.length === 0) {
+                const row = tableBody.insertRow();
+                const cell = row.insertCell();
+                cell.colSpan = 5; // Span across all columns
+                cell.className = 'py-3 px-6 text-center text-[#366E8A]';
+                cell.textContent = 'No tasks to display for this view.';
+            } else {
+                filteredTasks.forEach(task => {
+                    const row = tableBody.insertRow();
+                    row.className = `border-b border-[#F2F2F2] ${task.completed ? 'task-completed' : ''}`;
+
+                    const taskCell = row.insertCell();
+                    taskCell.className = 'py-3 px-6 text-left';
+                    taskCell.textContent = task.name;
+
+                    const subjectCell = row.insertCell();
+                    subjectCell.className = 'py-3 px-6 text-left';
+                    subjectCell.textContent = task.subject;
+
+                    const dateCell = row.insertCell();
+                    dateCell.className = 'py-3 px-6 text-left';
+                    dateCell.textContent = task.displayDate; // Use displayDate
+
+                    const statusCell = row.insertCell();
+                    statusCell.className = 'py-3 px-6 text-center';
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = task.completed;
+                    checkbox.className = 'form-checkbox h-5 w-5 text-[#003F5C] rounded focus:ring-[#003F5C]';
+                    checkbox.dataset.taskId = task.id; // Store task ID
+                    checkbox.addEventListener('change', toggleTaskCompletion);
+                    statusCell.appendChild(checkbox);
+
+                    const actionsCell = row.insertCell();
+                    actionsCell.className = 'py-3 px-6 text-center';
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.className = 'bg-red-500 text-white py-1 px-3 rounded-md text-xs hover:bg-red-600 transition duration-200 ease-in-out';
+                    deleteBtn.dataset.taskId = task.id;
+                    deleteBtn.addEventListener('click', deleteTask);
+                    actionsCell.appendChild(deleteBtn);
+                });
+            }
+
+            // Update dashboard based on ALL tasks, not just filtered ones
+            updateDashboard();
+            renderSubjectProgressSummary(); // Always re-render subject progress
+        }
+
+        // Function to add a new task
+        function addTask() {
+            const taskNameInput = document.getElementById('taskNameInput');
+            const subjectInput = document.getElementById('subjectInput');
+
+            const taskName = taskNameInput.value.trim();
+            const subject = subjectInput.value;
+
+            if (taskName && subject) {
+                const todayString = getTodayDateString();
+                const newTask = {
+                    id: crypto.randomUUID(), // Generate a unique ID
+                    name: taskName,
+                    subject: subject,
+                    originalDate: todayString, // Automatically set to today
+                    displayDate: formatDateForDisplay(todayString), // Formatted for display
+                    completed: false
+                };
+                tasks.push(newTask);
+                saveTasks();
+                renderTasks(); // Re-render with current view
+                taskNameInput.value = ''; // Clear input fields
+                subjectInput.value = ''; // Reset subject dropdown
+            } else {
+                const messageBox = document.createElement('div');
+                messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
+                messageBox.textContent = 'Please enter a task name and select a subject.';
+                document.body.appendChild(messageBox);
+                setTimeout(() => {
+                    messageBox.remove();
+                }, 3000);
+            }
+        }
+
+        // Function to toggle task completion status
+        function toggleTaskCompletion(event) {
+            const taskId = event.target.dataset.taskId;
+            const taskIndex = tasks.findIndex(task => task.id === taskId);
+            if (taskIndex !== -1) {
+                tasks[taskIndex].completed = event.target.checked;
+                saveTasks();
+                renderTasks(); // Re-render to apply line-through style and update dashboard
+            }
+        }
+
+        // Function to delete a task
+        function deleteTask(event) {
+            const taskId = event.target.dataset.taskId;
+            tasks = tasks.filter(task => task.id !== taskId);
+            saveTasks();
+            renderTasks();
+        }
+
+        // Function to update the dashboard metrics based on ALL tasks
+        function updateDashboard() {
+            const totalTasks = tasks.length;
+            const completedTasks = tasks.filter(task => task.completed).length;
+            const completionPercentage = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+
+            document.getElementById('totalTasksDisplay').textContent = totalTasks;
+            document.getElementById('completedTasksDisplay').textContent = completedTasks;
+            document.getElementById('completionPercentageDisplay').textContent = `${completionPercentage}%`;
+        }
+
+        // Function to render subject progress summary
+        function renderSubjectProgressSummary() {
+            const container = document.getElementById('subjectProgressContainer');
+            container.innerHTML = ''; // Clear existing cards
+
+            const subjectData = {};
+            subjects.forEach(subject => {
+                subjectData[subject] = { total: 0, completed: 0 };
+            });
+
+            tasks.forEach(task => {
+                if (subjectData[task.subject]) {
+                    subjectData[task.subject].total++;
+                    if (task.completed) {
+                        subjectData[task.subject].completed++;
+                    }
+                }
+            });
+
+            subjects.forEach(subject => {
+                const total = subjectData[subject].total;
+                const completed = subjectData[subject].completed;
+                const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+                const card = document.createElement('div');
+                card.className = 'p-4 bg-[#A7D5E5] rounded-md cursor-pointer hover:bg-[#6B9DB3] hover:text-white transition duration-200 ease-in-out';
+                card.innerHTML = `
+                    <p class="text-sm font-semibold text-[#003F5C]">${subject}</p>
+                    <p class="text-xl font-bold text-[#003F5C]">${completed} / ${total}</p>
+                    <p class="text-xs text-[#366E8A]">${percentage}% Completed</p>
+                `;
+                card.dataset.subjectFilter = subject;
+                card.addEventListener('click', (event) => {
+                    currentSubjectFilter = event.currentTarget.dataset.subjectFilter;
+                    currentView = 'all'; // Switch to all tasks view to show all tasks for the subject
+                    renderTasks();
+                });
+                container.appendChild(card);
+            });
+        }
+
+
+        // Function to show report in a modal
+        function showReportModal(content, title) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-xl max-w-lg w-full relative">
+                    <button class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold" onclick="this.closest('.fixed').remove()">&times;</button>
+                    <h2 class="text-2xl font-bold text-[#003F5C] mb-4">${title}</h2>
+                    <div class="text-[#366E8A] overflow-y-auto max-h-96">
+                        ${content}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Report functions
+        function generateDailyReport() {
+            const todayString = getTodayDateString();
+            // Daily report should include all tasks due today, regardless of completion status
+            const dailyTasks = tasks.filter(task => task.originalDate === todayString);
+            const totalDaily = dailyTasks.length;
+            const completedDaily = dailyTasks.filter(task => task.completed).length;
+
+            let reportContent = `<h3 class="text-xl font-bold text-[#003F5C] mb-2">Daily Report for ${formatDateForDisplay(todayString)}</h3>`;
+            reportContent += `<p>Total Tasks: ${totalDaily}</p>`;
+            reportContent += `<p>Completed Tasks: ${completedDaily}</p>`;
+            reportContent += `<p>Completion Rate: ${totalDaily === 0 ? 0 : Math.round((completedDaily / totalDaily) * 100)}%</p>`;
+            reportContent += `<h4 class="font-semibold mt-4">Tasks:</h4><ul>`;
+            if (dailyTasks.length === 0) {
+                reportContent += `<li>No tasks for today.</li>`;
+            } else {
+                dailyTasks.forEach(task => {
+                    reportContent += `<li class="${task.completed ? 'task-completed' : ''}">${task.name} (${task.subject}) (Due: ${task.displayDate}) - ${task.completed ? 'Completed' : 'Pending'}</li>`;
+                });
+            }
+            reportContent += `</ul>`;
+
+            showReportModal(reportContent, 'Daily Report');
+        }
+
+        function generateWeeklyReport() {
+            const todayString = getTodayDateString();
+            const startOfWeekString = getStartOfWeek(todayString);
+            const endOfWeek = new Date(startOfWeekString);
+            endOfWeek.setDate(endOfWeek.getDate() + 6);
+            const endOfWeekString = endOfWeek.toISOString().split('T')[0];
+
+            const weeklyTasks = tasks.filter(task => {
+                return task.originalDate >= startOfWeekString && task.originalDate <= endOfWeekString;
+            });
+
+            const totalWeekly = weeklyTasks.length;
+            const completedWeekly = weeklyTasks.filter(task => task.completed).length;
+
+            let reportContent = `<h3 class="text-xl font-bold text-[#003F5C] mb-2">Weekly Report (${formatDateForDisplay(startOfWeekString)} - ${formatDateForDisplay(endOfWeekString)})</h3>`;
+            reportContent += `<p>Total Tasks: ${totalWeekly}</p>`;
+            reportContent += `<p>Completed Tasks: ${completedWeekly}</p>`;
+            reportContent += `<p>Completion Rate: ${totalWeekly === 0 ? 0 : Math.round((completedWeekly / totalWeekly) * 100)}%</p>`;
+            reportContent += `<h4 class="font-semibold mt-4">Tasks:</h4><ul>`;
+            if (weeklyTasks.length === 0) {
+                reportContent += `<li>No tasks for this week.</li>`;
+            } else {
+                weeklyTasks.forEach(task => {
+                    reportContent += `<li class="${task.completed ? 'task-completed' : ''}">${task.name} (${task.subject}) (Due: ${task.displayDate}) - ${task.completed ? 'Completed' : 'Pending'}</li>`;
+                });
+            }
+            reportContent += `</ul>`;
+
+            showReportModal(reportContent, 'Weekly Report');
+        }
+
+        // Function to export tasks to CSV
+        function exportTasksToCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Task Name,Subject,Original Due Date (YYYY-MM-DD),Display Date (DD/MM/YY),Completed\n"; // Headers for tasks
+
+            tasks.forEach(task => {
+                // Escape commas and wrap in double quotes if necessary for CSV
+                const taskNameEscaped = `"${task.name.replace(/"/g, '""')}"`;
+                const subjectEscaped = `"${task.subject.replace(/"/g, '""')}"`;
+                let row = `${taskNameEscaped},${subjectEscaped},${task.originalDate},${task.displayDate},${task.completed ? 'Yes' : 'No'}`;
+                csvContent += row + "\n";
+            });
+
+            // Add overall dashboard summary (for all tasks in the system)
+            const totalTasksOverall = tasks.length;
+            const completedTasksOverall = tasks.filter(task => task.completed).length;
+            const completionPercentageOverall = totalTasksOverall === 0 ? 0 : Math.round((completedTasksOverall / totalTasksOverall) * 100);
+
+            csvContent += "\n"; // Add a blank line for separation
+            csvContent += "--- Overall Progress Summary (All Tasks) ---\n";
+            csvContent += `Total Tasks (All Time):,${totalTasksOverall}\n`;
+            csvContent += `Completed Tasks (All Time):,${completedTasksOverall}\n`;
+            csvContent += `Overall Completion Rate:,${completionPercentageOverall}%\n`;
+
+            // Add subject-wise progress summary
+            csvContent += "\n";
+            csvContent += "--- Subject-wise Progress Summary ---\n";
+            csvContent += "Subject,Total Tasks,Completed Tasks,Completion Rate\n"; // New headers for subject summary
+
+            const subjectData = {};
+            subjects.forEach(subject => {
+                subjectData[subject] = { total: 0, completed: 0 };
+            });
+
+            tasks.forEach(task => {
+                if (subjectData[task.subject]) {
+                    subjectData[task.subject].total++;
+                    if (task.completed) {
+                        subjectData[task.subject].completed++;
+                    }
+                }
+            });
+
+            subjects.forEach(subject => {
+                const total = subjectData[subject].total;
+                const completed = subjectData[subject].completed;
+                const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
+                csvContent += `${subject},${total},${completed},${percentage}%\n`; // Format as Subject, Total, Completed, Percentage
+            });
+
+
+            const today = new Date();
+            const timestamp = today.getFullYear() +
+                              String(today.getMonth() + 1).padStart(2, '0') +
+                              String(today.getDate()).padStart(2, '0') + '_' +
+                              String(today.getHours()).padStart(2, '0') +
+                              String(today.getMinutes()).padStart(2, '0') +
+                              String(today.getSeconds()).padStart(2, '0');
+            const filename = `ibps_tasks_data_${timestamp}.csv`;
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", filename);
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+            document.body.removeChild(link); // Clean up
+
+            // Show confirmation message
+            const messageBox = document.createElement('div');
+            messageBox.className = 'message-box';
+            messageBox.textContent = `Data saved to ${filename}!`;
+            document.body.appendChild(messageBox);
+            setTimeout(() => {
+                messageBox.classList.add('show');
+            }, 10); // Small delay to trigger transition
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+                setTimeout(() => messageBox.remove(), 500); // Remove after transition
+            }, 3000); // Hide after 3 seconds
+        }
+
+        // Event listeners and initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTasks();
+            renderTasks(); // Initial render for daily view
+
+            document.getElementById('addTaskBtn').addEventListener('click', addTask);
+
+            // View selection buttons
+            document.getElementById('dailyViewBtn').addEventListener('click', () => { currentView = 'daily'; currentSubjectFilter = 'all'; renderTasks(); });
+            document.getElementById('weeklyViewBtn').addEventListener('click', () => { currentView = 'weekly'; currentSubjectFilter = 'all'; renderTasks(); });
+            document.getElementById('allTasksViewBtn').addEventListener('click', () => { currentView = 'all'; currentSubjectFilter = 'all'; renderTasks(); });
+
+            // Report buttons
+            document.getElementById('dailyReportBtn').addEventListener('click', generateDailyReport);
+            document.getElementById('weeklyReportBtn').addEventListener('click', generateWeeklyReport);
+
+            // Save Data button
+            document.getElementById('saveDataBtn').addEventListener('click', exportTasksToCSV);
+        });
+    </script>
+</body>
+</html>
