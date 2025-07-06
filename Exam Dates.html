@@ -145,6 +145,43 @@
         .message-box.show {
             opacity: 1;
         }
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease-in-out;
+        }
+        .modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6B9DB3;
+        }
     </style>
 </head>
 <body>
@@ -221,7 +258,7 @@
                         <thead class="bg-[#A7D5E5] text-[#003F5C] uppercase text-sm leading-normal">
                             <tr>
                                 <th class="py-3 px-6 text-left">Time Slot</th>
-                                <th class="py-3 px-6 text-left">Subject Focus</th>
+                                <th class="py-3 px-6 text-left">Category Focus</th>
                                 <th class="py-3 px-6 text-left">Specific Topics/Activities</th>
                                 <th class="py-3 px-6 text-left">Daily Practice Targets</th>
                             </tr>
@@ -334,15 +371,16 @@
                                 class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none">
                         </div>
                         <div>
-                            <label for="subjectInput" class="block text-sm font-medium text-[#366E8A] mb-1">Subject</label>
-                            <select id="subjectInput"
+                            <label for="categoryInput" class="block text-sm font-medium text-[#366E8A] mb-1">Category of Task</label>
+                            <select id="categoryInput"
                                 class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none bg-white">
-                                <option value="">Select Subject</option>
+                                <option value="">Select Category</option>
                                 <option value="Quant">Quant</option>
                                 <option value="Reasoning">Reasoning</option>
                                 <option value="English">English</option>
                                 <option value="CA">Current Affairs</option>
                                 <option value="Computer Knowledge">Computer Knowledge</option>
+                                <option value="Other Task">Other Task</option>
                             </select>
                         </div>
                         <div class="flex items-end">
@@ -366,7 +404,7 @@
                             <thead class="bg-[#A7D5E5] text-[#003F5C] uppercase text-sm leading-normal">
                                 <tr>
                                     <th class="py-3 px-6 text-left">Task</th>
-                                    <th class="py-3 px-6 text-left">Subject</th>
+                                    <th class="py-3 px-6 text-left">Category of Task</th>
                                     <th class="py-3 px-6 text-left">Due Date</th>
                                     <th class="py-3 px-6 text-center">Status</th>
                                     <th class="py-3 px-6 text-center">Actions</th>
@@ -380,9 +418,9 @@
                 </div>
 
                 <div class="card mb-8">
-                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Subject Progress</h3>
-                    <div id="subjectProgressContainer" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center">
-                        <!-- Subject progress cards will be rendered here by JavaScript -->
+                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Category Progress</h3>
+                    <div id="categoryProgressContainer" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center">
+                        <!-- Category progress cards will be rendered here by JavaScript -->
                     </div>
                 </div>
 
@@ -414,12 +452,50 @@
         </main>
     </div>
 
+    <!-- Edit Task Modal -->
+    <div id="editTaskModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeEditModal()">&times;</span>
+            <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Edit Task</h3>
+            <div class="mb-4">
+                <label for="editTaskNameInput" class="block text-sm font-medium text-[#366E8A] mb-1">Task Name</label>
+                <input type="text" id="editTaskNameInput"
+                    class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none">
+            </div>
+            <div class="mb-6">
+                <label for="editCategoryInput" class="block text-sm font-medium text-[#366E8A] mb-1">Category of Task</label>
+                <select id="editCategoryInput"
+                    class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none bg-white">
+                    <option value="">Select Category</option>
+                    <option value="Quant">Quant</option>
+                    <option value="Reasoning">Reasoning</option>
+                    <option value="English">English</option>
+                    <option value="CA">Current Affairs</option>
+                    <option value="Computer Knowledge">Computer Knowledge</option>
+                    <option value="Other Task">Other Task</option>
+                </select>
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button id="updateTaskBtn"
+                    class="bg-[#003F5C] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] focus:outline-none focus:ring-2 focus:ring-[#003F5C] focus:ring-offset-2 transition duration-200 ease-in-out">
+                    Update Task
+                </button>
+                <button onclick="closeEditModal()"
+                    class="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-200 ease-in-out">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         let tasks = [];
         let currentView = 'daily'; // Default view
-        let currentSubjectFilter = 'all'; // Default subject filter
+        let currentCategoryFilter = 'all'; // Default category filter
+        let currentEditingTaskId = null; // To store the ID of the task being edited
 
-        const subjects = ["Quant", "Reasoning", "English", "CA", "Computer Knowledge"];
+        const categories = ["Quant", "Reasoning", "English", "CA", "Computer Knowledge", "Other Task"];
 
         // Helper to format date for display (DD/MM/YY)
         function formatDateForDisplay(dateString) {
@@ -470,7 +546,7 @@
             saveTasks(); // Save tasks (after any filtering) and update lastAccessDate
         }
 
-        // Function to filter tasks based on the current view and subject filter
+        // Function to filter tasks based on the current view and category filter
         function getFilteredTasks() {
             const todayString = getTodayDateString();
             let filtered = [];
@@ -494,9 +570,9 @@
                 filtered = tasks;
             }
 
-            // Then, apply subject filter if one is selected
-            if (currentSubjectFilter !== 'all') {
-                filtered = filtered.filter(task => task.subject === currentSubjectFilter);
+            // Then, apply category filter if one is selected
+            if (currentCategoryFilter !== 'all') {
+                filtered = filtered.filter(task => task.category === currentCategoryFilter);
             }
 
             // Sort tasks by due date (ascending)
@@ -531,9 +607,9 @@
                     taskCell.className = 'py-3 px-6 text-left';
                     taskCell.textContent = task.name;
 
-                    const subjectCell = row.insertCell();
-                    subjectCell.className = 'py-3 px-6 text-left';
-                    subjectCell.textContent = task.subject;
+                    const categoryCell = row.insertCell();
+                    categoryCell.className = 'py-3 px-6 text-left';
+                    categoryCell.textContent = task.category;
 
                     const dateCell = row.insertCell();
                     dateCell.className = 'py-3 px-6 text-left';
@@ -550,7 +626,17 @@
                     statusCell.appendChild(checkbox);
 
                     const actionsCell = row.insertCell();
-                    actionsCell.className = 'py-3 px-6 text-center';
+                    actionsCell.className = 'py-3 px-6 text-center flex space-x-2 justify-center'; // Added flex for buttons
+
+                    // Edit Button
+                    const editBtn = document.createElement('button');
+                    editBtn.textContent = 'Edit';
+                    editBtn.className = 'bg-blue-500 text-white py-1 px-3 rounded-md text-xs hover:bg-blue-600 transition duration-200 ease-in-out';
+                    editBtn.dataset.taskId = task.id;
+                    editBtn.addEventListener('click', () => openEditModal(task.id));
+                    actionsCell.appendChild(editBtn);
+
+                    // Delete Button
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'Delete';
                     deleteBtn.className = 'bg-red-500 text-white py-1 px-3 rounded-md text-xs hover:bg-red-600 transition duration-200 ease-in-out';
@@ -562,23 +648,23 @@
 
             // Update dashboard based on ALL tasks, not just filtered ones
             updateDashboard();
-            renderSubjectProgressSummary(); // Always re-render subject progress
+            renderCategoryProgressSummary(); // Always re-render category progress
         }
 
         // Function to add a new task
         function addTask() {
             const taskNameInput = document.getElementById('taskNameInput');
-            const subjectInput = document.getElementById('subjectInput');
+            const categoryInput = document.getElementById('categoryInput');
 
             const taskName = taskNameInput.value.trim();
-            const subject = subjectInput.value;
+            const category = categoryInput.value;
 
-            if (taskName && subject) {
+            if (taskName && category) {
                 const todayString = getTodayDateString();
                 const newTask = {
                     id: crypto.randomUUID(), // Generate a unique ID
                     name: taskName,
-                    subject: subject,
+                    category: category,
                     originalDate: todayString, // Automatically set to today
                     displayDate: formatDateForDisplay(todayString), // Formatted for display
                     completed: false
@@ -587,11 +673,11 @@
                 saveTasks();
                 renderTasks(); // Re-render with current view
                 taskNameInput.value = ''; // Clear input fields
-                subjectInput.value = ''; // Reset subject dropdown
+                categoryInput.value = ''; // Reset category dropdown
             } else {
                 const messageBox = document.createElement('div');
                 messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
-                messageBox.textContent = 'Please enter a task name and select a subject.';
+                messageBox.textContent = 'Please enter a task name and select a category.';
                 document.body.appendChild(messageBox);
                 setTimeout(() => {
                     messageBox.remove();
@@ -618,6 +704,52 @@
             renderTasks();
         }
 
+        // Function to open the edit modal
+        function openEditModal(taskId) {
+            currentEditingTaskId = taskId;
+            const task = tasks.find(t => t.id === taskId);
+
+            if (task) {
+                document.getElementById('editTaskNameInput').value = task.name;
+                document.getElementById('editCategoryInput').value = task.category;
+                document.getElementById('editTaskModal').classList.add('show');
+            }
+        }
+
+        // Function to close the edit modal
+        function closeEditModal() {
+            document.getElementById('editTaskModal').classList.remove('show');
+            currentEditingTaskId = null; // Clear the editing task ID
+        }
+
+        // Function to update the edited task
+        function updateEditedTask() {
+            if (!currentEditingTaskId) return;
+
+            const taskIndex = tasks.findIndex(task => task.id === currentEditingTaskId);
+            if (taskIndex !== -1) {
+                const updatedName = document.getElementById('editTaskNameInput').value.trim();
+                const updatedCategory = document.getElementById('editCategoryInput').value;
+
+                if (updatedName && updatedCategory) {
+                    tasks[taskIndex].name = updatedName;
+                    tasks[taskIndex].category = updatedCategory;
+                    saveTasks();
+                    renderTasks();
+                    closeEditModal();
+                } else {
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
+                    messageBox.textContent = 'Task name and category cannot be empty.';
+                    document.body.appendChild(messageBox);
+                    setTimeout(() => {
+                        messageBox.remove();
+                    }, 3000);
+                }
+            }
+        }
+
+
         // Function to update the dashboard metrics based on ALL tasks
         function updateDashboard() {
             const totalTasks = tasks.length;
@@ -629,41 +761,41 @@
             document.getElementById('completionPercentageDisplay').textContent = `${completionPercentage}%`;
         }
 
-        // Function to render subject progress summary
-        function renderSubjectProgressSummary() {
-            const container = document.getElementById('subjectProgressContainer');
+        // Function to render category progress summary
+        function renderCategoryProgressSummary() {
+            const container = document.getElementById('categoryProgressContainer');
             container.innerHTML = ''; // Clear existing cards
 
-            const subjectData = {};
-            subjects.forEach(subject => {
-                subjectData[subject] = { total: 0, completed: 0 };
+            const categoryData = {};
+            categories.forEach(category => {
+                categoryData[category] = { total: 0, completed: 0 };
             });
 
             tasks.forEach(task => {
-                if (subjectData[task.subject]) {
-                    subjectData[task.subject].total++;
+                if (categoryData[task.category]) {
+                    categoryData[task.category].total++;
                     if (task.completed) {
-                        subjectData[task.subject].completed++;
+                        categoryData[task.category].completed++;
                     }
                 }
             });
 
-            subjects.forEach(subject => {
-                const total = subjectData[subject].total;
-                const completed = subjectData[subject].completed;
+            categories.forEach(category => {
+                const total = categoryData[category].total;
+                const completed = categoryData[category].completed;
                 const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
 
                 const card = document.createElement('div');
                 card.className = 'p-4 bg-[#A7D5E5] rounded-md cursor-pointer hover:bg-[#6B9DB3] hover:text-white transition duration-200 ease-in-out';
                 card.innerHTML = `
-                    <p class="text-sm font-semibold text-[#003F5C]">${subject}</p>
+                    <p class="text-sm font-semibold text-[#003F5C]">${category}</p>
                     <p class="text-xl font-bold text-[#003F5C]">${completed} / ${total}</p>
                     <p class="text-xs text-[#366E8A]">${percentage}% Completed</p>
                 `;
-                card.dataset.subjectFilter = subject;
+                card.dataset.categoryFilter = category;
                 card.addEventListener('click', (event) => {
-                    currentSubjectFilter = event.currentTarget.dataset.subjectFilter;
-                    currentView = 'all'; // Switch to all tasks view to show all tasks for the subject
+                    currentCategoryFilter = event.currentTarget.dataset.categoryFilter;
+                    currentView = 'all'; // Switch to all tasks view to show all tasks for the category
                     renderTasks();
                 });
                 container.appendChild(card);
@@ -704,7 +836,7 @@
                 reportContent += `<li>No tasks for today.</li>`;
             } else {
                 dailyTasks.forEach(task => {
-                    reportContent += `<li class="${task.completed ? 'task-completed' : ''}">${task.name} (${task.subject}) (Due: ${task.displayDate}) - ${task.completed ? 'Completed' : 'Pending'}</li>`;
+                    reportContent += `<li class="${task.completed ? 'task-completed' : ''}">${task.name} (${task.category}) (Due: ${task.displayDate}) - ${task.completed ? 'Completed' : 'Pending'}</li>`;
                 });
             }
             reportContent += `</ul>`;
@@ -735,7 +867,7 @@
                 reportContent += `<li>No tasks for this week.</li>`;
             } else {
                 weeklyTasks.forEach(task => {
-                    reportContent += `<li class="${task.completed ? 'task-completed' : ''}">${task.name} (${task.subject}) (Due: ${task.displayDate}) - ${task.completed ? 'Completed' : 'Pending'}</li>`;
+                    reportContent += `<li class="${task.completed ? 'task-completed' : ''}">${task.name} (${task.category}) (Due: ${task.displayDate}) - ${task.completed ? 'Completed' : 'Pending'}</li>`;
                 });
             }
             reportContent += `</ul>`;
@@ -746,13 +878,13 @@
         // Function to export tasks to CSV
         function exportTasksToCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Task Name,Subject,Original Due Date (YYYY-MM-DD),Display Date (DD/MM/YY),Completed\n"; // Headers for tasks
+            csvContent += "Task Name,Category of Task,Original Due Date (YYYY-MM-DD),Display Date (DD/MM/YY),Completed\n"; // Headers for tasks
 
             tasks.forEach(task => {
                 // Escape commas and wrap in double quotes if necessary for CSV
                 const taskNameEscaped = `"${task.name.replace(/"/g, '""')}"`;
-                const subjectEscaped = `"${task.subject.replace(/"/g, '""')}"`;
-                let row = `${taskNameEscaped},${subjectEscaped},${task.originalDate},${task.displayDate},${task.completed ? 'Yes' : 'No'}`;
+                const categoryEscaped = `"${task.category.replace(/"/g, '""')}"`;
+                let row = `${taskNameEscaped},${categoryEscaped},${task.originalDate},${task.displayDate},${task.completed ? 'Yes' : 'No'}`;
                 csvContent += row + "\n";
             });
 
@@ -767,30 +899,30 @@
             csvContent += `Completed Tasks (All Time):,${completedTasksOverall}\n`;
             csvContent += `Overall Completion Rate:,${completionPercentageOverall}%\n`;
 
-            // Add subject-wise progress summary
+            // Add category-wise progress summary
             csvContent += "\n";
-            csvContent += "--- Subject-wise Progress Summary ---\n";
-            csvContent += "Subject,Total Tasks,Completed Tasks,Completion Rate\n"; // New headers for subject summary
+            csvContent += "--- Category-wise Progress Summary ---\n";
+            csvContent += "Category,Total Tasks,Completed Tasks,Completion Rate\n"; // New headers for category summary
 
-            const subjectData = {};
-            subjects.forEach(subject => {
-                subjectData[subject] = { total: 0, completed: 0 };
+            const categoryData = {};
+            categories.forEach(category => {
+                categoryData[category] = { total: 0, completed: 0 };
             });
 
             tasks.forEach(task => {
-                if (subjectData[task.subject]) {
-                    subjectData[task.subject].total++;
+                if (categoryData[task.category]) {
+                    categoryData[task.category].total++;
                     if (task.completed) {
-                        subjectData[task.subject].completed++;
+                        categoryData[task.category].completed++;
                     }
                 }
             });
 
-            subjects.forEach(subject => {
-                const total = subjectData[subject].total;
-                const completed = subjectData[subject].completed;
+            categories.forEach(category => {
+                const total = categoryData[category].total;
+                const completed = categoryData[category].completed;
                 const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
-                csvContent += `${subject},${total},${completed},${percentage}%\n`; // Format as Subject, Total, Completed, Percentage
+                csvContent += `${category},${total},${completed},${percentage}%\n`; // Format as Category, Total, Completed, Percentage
             });
 
 
@@ -831,11 +963,12 @@
             renderTasks(); // Initial render for daily view
 
             document.getElementById('addTaskBtn').addEventListener('click', addTask);
+            document.getElementById('updateTaskBtn').addEventListener('click', updateEditedTask); // New: Update button in modal
 
             // View selection buttons
-            document.getElementById('dailyViewBtn').addEventListener('click', () => { currentView = 'daily'; currentSubjectFilter = 'all'; renderTasks(); });
-            document.getElementById('weeklyViewBtn').addEventListener('click', () => { currentView = 'weekly'; currentSubjectFilter = 'all'; renderTasks(); });
-            document.getElementById('allTasksViewBtn').addEventListener('click', () => { currentView = 'all'; currentSubjectFilter = 'all'; renderTasks(); });
+            document.getElementById('dailyViewBtn').addEventListener('click', () => { currentView = 'daily'; currentCategoryFilter = 'all'; renderTasks(); });
+            document.getElementById('weeklyViewBtn').addEventListener('click', () => { currentView = 'weekly'; currentCategoryFilter = 'all'; renderTasks(); });
+            document.getElementById('allTasksViewBtn').addEventListener('click', () => { currentView = 'all'; currentCategoryFilter = 'all'; renderTasks(); });
 
             // Report buttons
             document.getElementById('dailyReportBtn').addEventListener('click', generateDailyReport);
