@@ -126,9 +126,7 @@
         table tbody tr:nth-child(even) {
             background-color: #FFFFFF; /* White background for even rows */
         }
-        table tbody tr:hover {
-            background-color: #E6F2F7; /* Hover effect for all rows */
-        }
+        /* Removed hover for mobile optimization */
         .message-box {
             position: fixed;
             top: 20px;
@@ -181,6 +179,106 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: #6B9DB3;
+        }
+        /* Ensure buttons always have their base color, and active state applies on press */
+        button {
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            outline: none; /* Remove default focus outline */
+        }
+        button:focus {
+            box-shadow: 0 0 0 2px rgba(0, 63, 92, 0.5); /* Example: dark blue ring */
+        }
+
+        /* Button color definitions */
+        .btn-dark-blue {
+            background-color: #003F5C;
+            color: white;
+        }
+        .btn-dark-blue:active {
+            background-color: #002A3D; /* Darker shade for active state */
+        }
+
+        .btn-green {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+        .btn-green:active {
+            background-color: #45A049; /* Darker green for active state */
+        }
+
+        .btn-blue {
+            background-color: #3B82F6; /* Standard Blue */
+            color: white;
+        }
+        .btn-blue:active {
+            background-color: #2563EB; /* Darker blue for active state */
+        }
+
+        .btn-red {
+            background-color: #EF4444; /* Standard Red */
+            color: white;
+        }
+        .btn-red:active {
+            background-color: #DC2626; /* Darker red for active state */
+        }
+
+        .btn-gray {
+            background-color: #D1D5DB; /* Gray for cancel */
+            color: #4B5563;
+        }
+        .btn-gray:active {
+            background-color: #9CA3AF; /* Darker gray for active state */
+        }
+
+        /* Specific styles for filter buttons (All, Completed, Uncompleted) */
+        .btn-filter-selected {
+            background-color: #003F5C; /* Dark blue when selected */
+            color: white;
+        }
+        .btn-filter-selected:active {
+            background-color: #002A3D; /* Darker shade when selected and active */
+        }
+
+        .btn-filter-unselected {
+            background-color: white; /* White when unselected */
+            color: #003F5C; /* Dark text when unselected */
+            border: 1px solid #003F5C; /* Optional: add a border to unselected for clarity */
+        }
+        .btn-filter-unselected:active {
+            background-color: #E0E0E0; /* Light gray when unselected and active */
+            color: #003F5C;
+        }
+
+
+        .cursor-pointer.active-category-card { /* Active state for category cards */
+            background-color: #6B9DB3;
+            color: white;
+        }
+        .total-time-box {
+            background-color: #A7D5E5;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #003F5C;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            min-width: 100px;
+        }
+
+        /* Responsive layout for buttons and total time */
+        .schedule-controls {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem; /* Space between items */
+            margin-bottom: 1rem;
+        }
+        @media (min-width: 768px) { /* On medium screens and up, make it a row */
+            .schedule-controls {
+                flex-direction: row;
+            }
         }
     </style>
 </head>
@@ -297,7 +395,7 @@
                             <tr>
                                 <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
                                 <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">11:30 AM - 12:30 PM: Arithmetic Topics (Focus on one topic per day, e.g., Profit & Loss, Time & Work) (Practice 20-25 questions)</td>
+                                <td class="py-3 px-6 border-b border-[#F2F2F2]">11:30 AM - 12:30 PM: Simplification/Approximation/Number Series (Practice 30-40 questions)</td>
                                 <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
                             </tr>
                             <tr>
@@ -383,9 +481,15 @@
                                 <option value="Other Task">Other Task</option>
                             </select>
                         </div>
-                        <div class="flex items-end">
+                        <div>
+                            <label for="timeTakenInput" class="block text-sm font-medium text-[#366E8A] mb-1">Time Taken (HH:MM)</label>
+                            <input type="text" id="timeTakenInput" placeholder="e.g., 01:30"
+                                class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none"
+                                pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Time in HH:MM format (e.g., 01:30)">
+                        </div>
+                        <div class="flex items-end col-span-full md:col-span-1">
                             <button id="addTaskBtn"
-                                class="w-full bg-[#003F5C] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] focus:outline-none focus:ring-2 focus:ring-[#003F5C] focus:ring-offset-2 transition duration-200 ease-in-out">
+                                class="w-full btn-green py-2 px-4 rounded-md text-white font-bold">
                                 Add Task
                             </button>
                         </div>
@@ -394,10 +498,13 @@
 
                 <div class="card mb-8">
                     <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Your Schedule</h3>
-                    <div class="flex justify-center space-x-4 mb-4">
-                        <button id="dailyViewBtn" class="bg-[#A7D5E5] text-[#003F5C] py-2 px-4 rounded-md hover:bg-[#6B9DB3] hover:text-white transition duration-200 ease-in-out">Daily View</button>
-                        <button id="weeklyViewBtn" class="bg-[#A7D5E5] text-[#003F5C] py-2 px-4 rounded-md hover:bg-[#6B9DB3] hover:text-white transition duration-200 ease-in-out">Weekly View</button>
-                        <button id="allTasksViewBtn" class="bg-[#A7D5E5] text-[#003F5C] py-2 px-4 rounded-md hover:bg-[#6B9DB3] hover:text-white transition duration-200 ease-in-out">All Tasks</button>
+                    <div class="schedule-controls">
+                        <button id="allTasksViewBtn" class="py-2 px-4 rounded-md">All Tasks</button>
+                        <button id="completedTasksViewBtn" class="py-2 px-4 rounded-md">Completed Tasks</button>
+                        <button id="uncompletedTasksViewBtn" class="py-2 px-4 rounded-md">Uncompleted Tasks</button>
+                        <div id="totalTimeForCurrentView" class="total-time-box">
+                            00:00
+                        </div>
                     </div>
                     <div class="overflow-x-auto">
                         <table id="scheduleTable" class="min-w-full bg-white rounded-lg overflow-hidden">
@@ -406,6 +513,7 @@
                                     <th class="py-3 px-6 text-left">Task</th>
                                     <th class="py-3 px-6 text-left">Category of Task</th>
                                     <th class="py-3 px-6 text-left">Due Date</th>
+                                    <th class="py-3 px-6 text-left">Time Taken</th>
                                     <th class="py-3 px-6 text-center">Status</th>
                                     <th class="py-3 px-6 text-center">Actions</th>
                                 </tr>
@@ -439,13 +547,14 @@
                             <p class="text-sm font-semibold text-[#003F5C]">Completion Rate</p>
                             <p id="completionPercentageDisplay" class="text-3xl font-bold text-[#003F5C]">0%</p>
                         </div>
+                        <!-- Removed Total Time Spent from here -->
                     </div>
                     <div class="flex justify-center space-x-4 mt-6">
-                        <button id="dailyReportBtn" class="bg-[#003F5C] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] transition duration-200 ease-in-out">Daily Report</button>
-                        <button id="weeklyReportBtn" class="bg-[#003F5C] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] transition duration-200 ease-in-out">Weekly Report</button>
+                        <button id="dailyReportBtn" class="btn-dark-blue py-2 px-4 rounded-md">Daily Report</button>
+                        <button id="weeklyReportBtn" class="btn-dark-blue py-2 px-4 rounded-md">Weekly Report</button>
                     </div>
                     <div class="flex justify-center mt-6">
-                        <button id="saveDataBtn" class="bg-[#6B9DB3] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] transition duration-200 ease-in-out">Save Data (CSV)</button>
+                        <button id="saveDataBtn" class="btn-green py-2 px-4 rounded-md">Save Data (CSV)</button>
                     </div>
                 </div>
             </section>
@@ -462,7 +571,7 @@
                 <input type="text" id="editTaskNameInput"
                     class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none">
             </div>
-            <div class="mb-6">
+            <div class="mb-4">
                 <label for="editCategoryInput" class="block text-sm font-medium text-[#366E8A] mb-1">Category of Task</label>
                 <select id="editCategoryInput"
                     class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none bg-white">
@@ -475,13 +584,19 @@
                     <option value="Other Task">Other Task</option>
                 </select>
             </div>
+            <div class="mb-6">
+                <label for="editTimeTakenInput" class="block text-sm font-medium text-[#366E8A] mb-1">Time Taken (HH:MM)</label>
+                <input type="text" id="editTimeTakenInput" placeholder="e.g., 01:30"
+                    class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none"
+                    pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Time in HH:MM format (e.g., 01:30)">
+            </div>
             <div class="flex justify-end space-x-4">
                 <button id="updateTaskBtn"
-                    class="bg-[#003F5C] text-white py-2 px-4 rounded-md hover:bg-[#366E8A] focus:outline-none focus:ring-2 focus:ring-[#003F5C] focus:ring-offset-2 transition duration-200 ease-in-out">
+                    class="btn-dark-blue py-2 px-4 rounded-md">
                     Update Task
                 </button>
                 <button onclick="closeEditModal()"
-                    class="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-200 ease-in-out">
+                    class="btn-gray py-2 px-4 rounded-md">
                     Cancel
                 </button>
             </div>
@@ -491,8 +606,9 @@
 
     <script>
         let tasks = [];
-        let currentView = 'daily'; // Default view
-        let currentCategoryFilter = 'all'; // Default category filter
+        let currentCategoryFilter = 'all'; // Default to show all tasks
+        let currentCompletionFilter = 'all'; // 'all', 'completed', 'uncompleted'
+
         let currentEditingTaskId = null; // To store the ID of the task being edited
 
         const categories = ["Quant", "Reasoning", "English", "CA", "Computer Knowledge", "Other Task"];
@@ -510,13 +626,23 @@
             return today.toISOString().split('T')[0];
         }
 
-        // Helper to get the start of the week (Monday) in YYYY-MM-DD format
-        function getStartOfWeek(dateString) {
-            const d = new Date(dateString);
-            const day = d.getDay(); // 0 for Sunday, 1 for Monday
-            const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday start
-            const startOfWeek = new Date(d.setDate(diff));
-            return startOfWeek.toISOString().split('T')[0];
+        // Helper to convert HH:MM string to total minutes
+        function convertHhMmToMinutes(hhMmString) {
+            if (!hhMmString || hhMmString === '00:00') return 0;
+            const parts = hhMmString.split(':');
+            if (parts.length !== 2) return 0; // Invalid format
+            const hours = parseInt(parts[0], 10);
+            const minutes = parseInt(parts[1], 10);
+            if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) return 0; // Invalid numbers
+            return hours * 60 + minutes;
+        }
+
+        // Helper to convert total minutes to HH:MM string
+        function convertMinutesToHhMm(totalMinutes) {
+            if (totalMinutes === 0) return '00:00';
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
         }
 
         // Function to save tasks to localStorage
@@ -539,41 +665,28 @@
             if (lastAccessDate && lastAccessDate !== todayString) {
                 tasks = tasks.filter(task => {
                     // Keep tasks that are not completed OR are due today/in the future
-                    // This means completed tasks from previous days are removed from the active list
                     return !task.completed || task.originalDate >= todayString;
                 });
             }
             saveTasks(); // Save tasks (after any filtering) and update lastAccessDate
         }
 
-        // Function to filter tasks based on the current view and category filter
+        // Function to filter tasks based on the current category and completion filter
         function getFilteredTasks() {
-            const todayString = getTodayDateString();
-            let filtered = [];
+            let filtered = tasks;
 
-            // First, filter by date view (daily, weekly, all)
-            if (currentView === 'daily') {
-                // Daily view shows only uncompleted tasks due today
-                filtered = tasks.filter(task => task.originalDate === todayString && !task.completed);
-            } else if (currentView === 'weekly') {
-                const startOfWeekString = getStartOfWeek(todayString);
-                const endOfWeek = new Date(startOfWeekString);
-                endOfWeek.setDate(endOfWeek.getDate() + 6); // End of week (Sunday)
-                const endOfWeekString = endOfWeek.toISOString().split('T')[0];
-
-                // Weekly view shows all tasks due this week, regardless of completion status
-                filtered = tasks.filter(task => {
-                    return task.originalDate >= startOfWeekString && task.originalDate <= endOfWeekString;
-                });
-            } else { // 'all'
-                // All tasks view shows all tasks, regardless of date or completion status
-                filtered = tasks;
-            }
-
-            // Then, apply category filter if one is selected
+            // Apply category filter first
             if (currentCategoryFilter !== 'all') {
                 filtered = filtered.filter(task => task.category === currentCategoryFilter);
             }
+
+            // Apply completion filter
+            if (currentCompletionFilter === 'completed') {
+                filtered = filtered.filter(task => task.completed);
+            } else if (currentCompletionFilter === 'uncompleted') {
+                filtered = filtered.filter(task => !task.completed);
+            }
+            // If currentCompletionFilter is 'all', no further filtering is needed
 
             // Sort tasks by due date (ascending)
             filtered.sort((a, b) => {
@@ -595,7 +708,7 @@
             if (filteredTasks.length === 0) {
                 const row = tableBody.insertRow();
                 const cell = row.insertCell();
-                cell.colSpan = 5; // Span across all columns
+                cell.colSpan = 6; // Span across all columns (Task, Category, Due Date, Time Taken, Status, Actions)
                 cell.className = 'py-3 px-6 text-center text-[#366E8A]';
                 cell.textContent = 'No tasks to display for this view.';
             } else {
@@ -615,6 +728,10 @@
                     dateCell.className = 'py-3 px-6 text-left';
                     dateCell.textContent = task.displayDate; // Use displayDate
 
+                    const timeTakenCell = row.insertCell();
+                    timeTakenCell.className = 'py-3 px-6 text-left';
+                    timeTakenCell.textContent = convertMinutesToHhMm(task.timeTaken || 0); // Display formatted time
+
                     const statusCell = row.insertCell();
                     statusCell.className = 'py-3 px-6 text-center';
                     const checkbox = document.createElement('input');
@@ -631,7 +748,7 @@
                     // Edit Button
                     const editBtn = document.createElement('button');
                     editBtn.textContent = 'Edit';
-                    editBtn.className = 'bg-blue-500 text-white py-1 px-3 rounded-md text-xs hover:bg-blue-600 transition duration-200 ease-in-out';
+                    editBtn.className = 'btn-blue py-1 px-3 rounded-md text-xs'; // Applied btn-blue
                     editBtn.dataset.taskId = task.id;
                     editBtn.addEventListener('click', () => openEditModal(task.id));
                     actionsCell.appendChild(editBtn);
@@ -639,27 +756,82 @@
                     // Delete Button
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'Delete';
-                    deleteBtn.className = 'bg-red-500 text-white py-1 px-3 rounded-md text-xs hover:bg-red-600 transition duration-200 ease-in-out';
+                    deleteBtn.className = 'btn-red py-1 px-3 rounded-md text-xs ml-2'; // Applied btn-red and added margin
                     deleteBtn.dataset.taskId = task.id;
                     deleteBtn.addEventListener('click', deleteTask);
                     actionsCell.appendChild(deleteBtn);
                 });
             }
 
-            // Update dashboard based on ALL tasks, not just filtered ones
+            // Update dashboard based on ALL tasks (for overall progress)
             updateDashboard();
             renderCategoryProgressSummary(); // Always re-render category progress
+            updateTotalTimeForCurrentView(filteredTasks); // Update total time for the tasks currently displayed
+            updateFilterButtonStates(); // Update the visual state of filter buttons
         }
+
+        // Function to update the "Total Time for Current View" display
+        function updateTotalTimeForCurrentView(tasksToCount) {
+            let totalTimeSpentMinutes = 0;
+            tasksToCount.forEach(task => {
+                totalTimeSpentMinutes += (task.timeTaken || 0);
+            });
+            const totalTimeSpentHhMm = convertMinutesToHhMm(totalTimeSpentMinutes);
+            document.getElementById('totalTimeForCurrentView').textContent = totalTimeSpentHhMm; // Only show time, no text
+        }
+
+        // Function to update the visual state of the filter buttons
+        function updateFilterButtonStates() {
+            const allBtn = document.getElementById('allTasksViewBtn');
+            const completedBtn = document.getElementById('completedTasksViewBtn');
+            const uncompletedBtn = document.getElementById('uncompletedTasksViewBtn');
+
+            // Reset all filter buttons to unselected state first
+            allBtn.classList.remove('btn-filter-selected');
+            allBtn.classList.add('btn-filter-unselected');
+            completedBtn.classList.remove('btn-filter-selected');
+            completedBtn.classList.add('btn-filter-unselected');
+            uncompletedBtn.classList.remove('btn-filter-selected');
+            uncompletedBtn.classList.add('btn-filter-unselected');
+
+
+            // Add selected class to the currently active filter button
+            if (currentCompletionFilter === 'all') {
+                allBtn.classList.remove('btn-filter-unselected');
+                allBtn.classList.add('btn-filter-selected');
+            } else if (currentCompletionFilter === 'completed') {
+                completedBtn.classList.remove('btn-filter-unselected');
+                completedBtn.classList.add('btn-filter-selected');
+            } else if (currentCompletionFilter === 'uncompleted') {
+                uncompletedBtn.classList.remove('btn-filter-unselected');
+                uncompletedBtn.classList.add('btn-filter-selected');
+            }
+        }
+
 
         // Function to add a new task
         function addTask() {
             const taskNameInput = document.getElementById('taskNameInput');
             const categoryInput = document.getElementById('categoryInput');
+            const timeTakenInput = document.getElementById('timeTakenInput');
 
             const taskName = taskNameInput.value.trim();
             const category = categoryInput.value;
+            const timeTaken = timeTakenInput.value.trim();
 
             if (taskName && category) {
+                // Validate time format if provided
+                if (timeTaken && !timeTakenInput.checkValidity()) {
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
+                    messageBox.textContent = 'Please enter time in HH:MM format (e.g., 01:30).';
+                    document.body.appendChild(messageBox);
+                    setTimeout(() => {
+                        messageBox.remove();
+                    }, 3000);
+                    return; // Stop function execution
+                }
+
                 const todayString = getTodayDateString();
                 const newTask = {
                     id: crypto.randomUUID(), // Generate a unique ID
@@ -667,13 +839,15 @@
                     category: category,
                     originalDate: todayString, // Automatically set to today
                     displayDate: formatDateForDisplay(todayString), // Formatted for display
-                    completed: false
+                    completed: false,
+                    timeTaken: convertHhMmToMinutes(timeTaken) // Store time in minutes
                 };
                 tasks.push(newTask);
                 saveTasks();
                 renderTasks(); // Re-render with current view
                 taskNameInput.value = ''; // Clear input fields
                 categoryInput.value = ''; // Reset category dropdown
+                timeTakenInput.value = ''; // Clear time input
             } else {
                 const messageBox = document.createElement('div');
                 messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
@@ -712,6 +886,7 @@
             if (task) {
                 document.getElementById('editTaskNameInput').value = task.name;
                 document.getElementById('editCategoryInput').value = task.category;
+                document.getElementById('editTimeTakenInput').value = convertMinutesToHhMm(task.timeTaken || 0); // Pre-fill formatted time
                 document.getElementById('editTaskModal').classList.add('show');
             }
         }
@@ -730,16 +905,30 @@
             if (taskIndex !== -1) {
                 const updatedName = document.getElementById('editTaskNameInput').value.trim();
                 const updatedCategory = document.getElementById('editCategoryInput').value;
+                const updatedTimeTaken = document.getElementById('editTimeTakenInput').value.trim();
+
+                // Validate time format if provided
+                if (updatedTimeTaken && !document.getElementById('editTimeTakenInput').checkValidity()) {
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
+                    messageBox.textContent = 'Please enter time in HH:MM format (e.g., 01:30).';
+                    document.body.appendChild(messageBox);
+                    setTimeout(() => {
+                        messageBox.remove();
+                    }, 3000);
+                    return; // Stop function execution
+                }
 
                 if (updatedName && updatedCategory) {
                     tasks[taskIndex].name = updatedName;
                     tasks[taskIndex].category = updatedCategory;
+                    tasks[taskIndex].timeTaken = convertHhMmToMinutes(updatedTimeTaken); // Update time in minutes
                     saveTasks();
                     renderTasks();
                     closeEditModal();
                 } else {
                     const messageBox = document.createElement('div');
-                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
+                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
                     messageBox.textContent = 'Task name and category cannot be empty.';
                     document.body.appendChild(messageBox);
                     setTimeout(() => {
@@ -750,7 +939,7 @@
         }
 
 
-        // Function to update the dashboard metrics based on ALL tasks
+        // Function to update the dashboard metrics based on ALL tasks (overall progress)
         function updateDashboard() {
             const totalTasks = tasks.length;
             const completedTasks = tasks.filter(task => task.completed).length;
@@ -786,7 +975,8 @@
                 const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
 
                 const card = document.createElement('div');
-                card.className = 'p-4 bg-[#A7D5E5] rounded-md cursor-pointer hover:bg-[#6B9DB3] hover:text-white transition duration-200 ease-in-out';
+                // Use a different class for category cards to distinguish from filter buttons
+                card.className = 'p-4 bg-[#A7D5E5] rounded-md cursor-pointer active:bg-[#6B9DB3] active:text-white transition duration-200 ease-in-out';
                 card.innerHTML = `
                     <p class="text-sm font-semibold text-[#003F5C]">${category}</p>
                     <p class="text-xl font-bold text-[#003F5C]">${completed} / ${total}</p>
@@ -794,8 +984,13 @@
                 `;
                 card.dataset.categoryFilter = category;
                 card.addEventListener('click', (event) => {
+                    // Remove 'active-category-card' from all category cards
+                    document.querySelectorAll('#categoryProgressContainer .active-category-card').forEach(c => c.classList.remove('active-category-card'));
+                    // Add 'active-category-card' to the clicked card
+                    event.currentTarget.classList.add('active-category-card');
+
                     currentCategoryFilter = event.currentTarget.dataset.categoryFilter;
-                    currentView = 'all'; // Switch to all tasks view to show all tasks for the category
+                    currentCompletionFilter = 'all'; // Reset completion filter when a category is selected
                     renderTasks();
                 });
                 container.appendChild(card);
@@ -809,7 +1004,7 @@
             modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
             modal.innerHTML = `
                 <div class="bg-white p-6 rounded-lg shadow-xl max-w-lg w-full relative">
-                    <button class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold" onclick="this.closest('.fixed').remove()">&times;</button>
+                    <button class="absolute top-3 right-3 text-gray-500 active:text-gray-700 text-xl font-bold" onclick="this.closest('.fixed').remove()">&times;</button>
                     <h2 class="text-2xl font-bold text-[#003F5C] mb-4">${title}</h2>
                     <div class="text-[#366E8A] overflow-y-auto max-h-96">
                         ${content}
@@ -845,6 +1040,15 @@
         }
 
         function generateWeeklyReport() {
+            // Helper to get the start of the week (Monday) in YYYY-MM-DD format
+            function getStartOfWeek(dateString) {
+                const d = new Date(dateString);
+                const day = d.getDay(); // 0 for Sunday, 1 for Monday
+                const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday start
+                const startOfWeek = new Date(d.setDate(diff));
+                return startOfWeek.toISOString().split('T')[0];
+            }
+
             const todayString = getTodayDateString();
             const startOfWeekString = getStartOfWeek(todayString);
             const endOfWeek = new Date(startOfWeekString);
@@ -878,13 +1082,14 @@
         // Function to export tasks to CSV
         function exportTasksToCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Task Name,Category of Task,Original Due Date (YYYY-MM-DD),Display Date (DD/MM/YY),Completed\n"; // Headers for tasks
+            csvContent += "Task Name,Category of Task,Original Due Date (YYYY-MM-DD),Display Date (DD/MM/YY),Time Taken (HH:MM),Completed\n"; // Headers for tasks
 
             tasks.forEach(task => {
                 // Escape commas and wrap in double quotes if necessary for CSV
                 const taskNameEscaped = `"${task.name.replace(/"/g, '""')}"`;
                 const categoryEscaped = `"${task.category.replace(/"/g, '""')}"`;
-                let row = `${taskNameEscaped},${categoryEscaped},${task.originalDate},${task.displayDate},${task.completed ? 'Yes' : 'No'}`;
+                const timeTakenHhMm = convertMinutesToHhMm(task.timeTaken || 0);
+                let row = `${taskNameEscaped},${categoryEscaped},${task.originalDate},${task.displayDate},${timeTakenHhMm},${task.completed ? 'Yes' : 'No'}`;
                 csvContent += row + "\n";
             });
 
@@ -893,11 +1098,19 @@
             const completedTasksOverall = tasks.filter(task => task.completed).length;
             const completionPercentageOverall = totalTasksOverall === 0 ? 0 : Math.round((completedTasksOverall / totalTasksOverall) * 100);
 
+            let totalTimeSpentMinutesOverall = 0;
+            tasks.forEach(task => {
+                totalTimeSpentMinutesOverall += (task.timeTaken || 0);
+            });
+            const totalTimeSpentHhMmOverall = convertMinutesToHhMm(totalTimeSpentMinutesOverall);
+
+
             csvContent += "\n"; // Add a blank line for separation
             csvContent += "--- Overall Progress Summary (All Tasks) ---\n";
             csvContent += `Total Tasks (All Time):,${totalTasksOverall}\n`;
             csvContent += `Completed Tasks (All Time):,${completedTasksOverall}\n`;
             csvContent += `Overall Completion Rate:,${completionPercentageOverall}%\n`;
+            csvContent += `Total Time Spent (All Time):,${totalTimeSpentHhMmOverall}\n`; // New line for total time
 
             // Add category-wise progress summary
             csvContent += "\n";
@@ -960,15 +1173,34 @@
         // Event listeners and initial load
         document.addEventListener('DOMContentLoaded', () => {
             loadTasks();
-            renderTasks(); // Initial render for daily view
+            renderTasks(); // Initial render for all tasks view (which calls updateFilterButtonStates)
 
             document.getElementById('addTaskBtn').addEventListener('click', addTask);
-            document.getElementById('updateTaskBtn').addEventListener('click', updateEditedTask); // New: Update button in modal
+            document.getElementById('updateTaskBtn').addEventListener('click', updateEditedTask); // Update button in modal
 
             // View selection buttons
-            document.getElementById('dailyViewBtn').addEventListener('click', () => { currentView = 'daily'; currentCategoryFilter = 'all'; renderTasks(); });
-            document.getElementById('weeklyViewBtn').addEventListener('click', () => { currentView = 'weekly'; currentCategoryFilter = 'all'; renderTasks(); });
-            document.getElementById('allTasksViewBtn').addEventListener('click', () => { currentView = 'all'; currentCategoryFilter = 'all'; renderTasks(); });
+            document.getElementById('allTasksViewBtn').addEventListener('click', () => {
+                currentCategoryFilter = 'all'; // Reset category filter
+                currentCompletionFilter = 'all'; // Show all tasks (completed and uncompleted)
+                // Remove 'active-category-card' from all category cards
+                document.querySelectorAll('#categoryProgressContainer .active-category-card').forEach(c => c.classList.remove('active-category-card'));
+                renderTasks();
+            });
+
+            document.getElementById('completedTasksViewBtn').addEventListener('click', () => {
+                currentCategoryFilter = 'all'; // Reset category filter
+                currentCompletionFilter = 'completed'; // Show only completed tasks
+                document.querySelectorAll('#categoryProgressContainer .active-category-card').forEach(c => c.classList.remove('active-category-card'));
+                renderTasks();
+            });
+
+            document.getElementById('uncompletedTasksViewBtn').addEventListener('click', () => {
+                currentCategoryFilter = 'all'; // Reset category filter
+                currentCompletionFilter = 'uncompleted'; // Show only uncompleted tasks
+                document.querySelectorAll('#categoryProgressContainer .active-category-card').forEach(c => c.classList.remove('active-category-card'));
+                renderTasks();
+            });
+
 
             // Report buttons
             document.getElementById('dailyReportBtn').addEventListener('click', generateDailyReport);
