@@ -307,7 +307,7 @@
             transition: all 0.2s ease-in-out;
             border: none;
         }
-        .modal-buttons .confirm-btn {
+        .modal-buttons .confirm-btn, .modal-buttons .download-btn {
             background-color: #ef4444; /* Red for confirm */
             color: #fff;
         }
@@ -321,6 +321,13 @@
         }
         .modal-buttons .cancel-btn:hover {
             background-color: #d1d5db;
+            transform: translateY(-1px);
+        }
+        .modal-buttons .download-btn {
+            background-color: #10b981; /* Green for download */
+        }
+        .modal-buttons .download-btn:hover {
+            background-color: #059669;
             transform: translateY(-1px);
         }
 
@@ -472,7 +479,7 @@
             <canvas id="taskCompletionRatesChart"></canvas>
         </div>
 
-        <button class="export-button" onclick="exportTasksToCSV()">Download Tasks as CSV</button>
+        <button class="export-button" onclick="showExportModal()">Download Tasks as CSV</button>
         <div id="copy-feedback" class="copy-feedback"></div>
 
 
@@ -488,6 +495,18 @@
             <div class="modal-buttons">
                 <button class="confirm-btn" id="confirm-modal-yes">Yes</button>
                 <button class="cancel-btn" id="confirm-modal-no">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Export Modal -->
+    <div id="export-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <h4>Enter CSV Filename</h4>
+            <input type="text" id="csv-filename-input" placeholder="daily_tasks" class="w-full">
+            <div class="modal-buttons">
+                <button class="download-btn" id="export-modal-download">Download</button>
+                <button class="cancel-btn" id="export-modal-cancel">Cancel</button>
             </div>
         </div>
     </div>
@@ -532,6 +551,64 @@
         let editingTaskIndex = null;
 
         /**
+         * Saves the current state of tasks and the last opened date to localStorage.
+         */
+        function saveState() {
+            const state = {
+                dailyMustTasks: dailyMustTasks,
+                lifestyleTasks: lifestyleTasks,
+                examOtherTasks: examOtherTasks,
+                lastDate: new Date().toDateString()
+            };
+            localStorage.setItem('taskTrackerState', JSON.stringify(state));
+        }
+
+        /**
+         * Resets the completion status of all tasks.
+         */
+        function resetTasks() {
+            dailyMustTasks.forEach(task => task.completed = false);
+            lifestyleTasks.forEach(task => task.completed = false);
+            examOtherTasks.forEach(task => task.completed = false);
+            saveState();
+        }
+
+        /**
+         * Loads the state from localStorage and handles the auto-reset for a new day.
+         */
+        function loadState() {
+            const savedState = localStorage.getItem('taskTrackerState');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                const today = new Date().toDateString();
+
+                if (state.lastDate !== today) {
+                    // It's a new day, so reset tasks but keep the user-added tasks.
+                    dailyMustTasks.forEach((task, index) => {
+                        if (index < state.dailyMustTasks.length) task.completed = false;
+                    });
+                    lifestyleTasks.forEach((task, index) => {
+                        if (index < state.lifestyleTasks.length) task.completed = false;
+                    });
+                    examOtherTasks = state.examOtherTasks.map(task => ({
+                        ...task,
+                        completed: false
+                    }));
+                    saveState();
+                    showFeedbackMessage('A new day has begun! Your tasks have been reset.', 'success');
+                } else {
+                    // It's the same day, load the saved completion status.
+                    dailyMustTasks = state.dailyMustTasks;
+                    lifestyleTasks = state.lifestyleTasks;
+                    examOtherTasks = state.examOtherTasks;
+                }
+            } else {
+                // No saved state, save the initial state.
+                saveState();
+            }
+        }
+
+        /**
          * Renders tasks for a given section.
          * @param {Array<Object>} tasks - The array of task objects.
          * @param {string} containerId - The ID of the HTML element to render tasks into.
@@ -568,7 +645,7 @@
 
                 const smileyEmoji = document.createElement('span');
                 smileyEmoji.className = `smiley-emoji ${task.completed ? 'visible' : ''}`;
-                smileyEmoji.textContent = '�';
+                smileyEmoji.textContent = '😊';
 
                 taskItem.appendChild(checkboxContainer);
                 taskItem.appendChild(taskText);
@@ -623,6 +700,7 @@
 
             if (tasks && tasks[index]) {
                 tasks[index].completed = !tasks[index].completed;
+                saveState();
                 updateUI();
             }
         }
@@ -664,6 +742,7 @@
                 taskNameInput.value = '';
                 taskDurationInput.value = '';
                 taskTopicSelect.value = '';
+                saveState();
                 updateUI();
             } else {
                 showFeedbackMessage('Please enter a valid task name, duration, and select a topic.', 'error');
@@ -694,6 +773,7 @@
         function deleteExamTask(index) {
             showConfirmModal('Are you sure you want to delete this task?', () => {
                 examOtherTasks.splice(index, 1);
+                saveState();
                 updateUI();
                 showFeedbackMessage('Task deleted successfully!', 'success');
             });
@@ -918,9 +998,49 @@
         }
 
         /**
-         * Generates CSV content from current tasks and triggers a download.
+         * Shows the modal to get a filename from the user.
          */
-        function exportTasksToCSV() {
+        function showExportModal() {
+            const modalOverlay = document.getElementById('export-modal-overlay');
+            const filenameInput = document.getElementById('csv-filename-input');
+            const downloadBtn = document.getElementById('export-modal-download');
+            const cancelBtn = document.getElementById('export-modal-cancel');
+            
+            // Set a default filename
+            const dateStr = new Date().toISOString().slice(0, 10);
+            filenameInput.value = `daily_tasks_${dateStr}`;
+            
+            modalOverlay.classList.add('visible');
+
+            downloadBtn.onclick = () => {
+                let filename = filenameInput.value.trim();
+                if (filename === '') {
+                    filename = 'daily_tasks';
+                }
+                if (!filename.endsWith('.csv')) {
+                    filename += '.csv';
+                }
+                performDownload(filename);
+                hideExportModal();
+            };
+
+            cancelBtn.onclick = () => {
+                hideExportModal();
+            };
+        }
+
+        /**
+         * Hides the custom export modal.
+         */
+        function hideExportModal() {
+            document.getElementById('export-modal-overlay').classList.remove('visible');
+        }
+
+        /**
+         * Generates CSV content from current tasks and triggers a download with a given filename.
+         * @param {string} filename - The desired name for the CSV file.
+         */
+        function performDownload(filename) {
             let csvContent = `Daily Task Tracker Data - ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}\n\n`;
 
             // --- Daily Must Tasks Section ---
@@ -966,11 +1086,7 @@
             csvContent += `"ALL SECTIONS",${overallCompleted},${overallTotal},${overallPercentage.toFixed(1)}%\n`;
 
             // Attempt to download using data URI, which is more reliable on mobile
-            const filename = 'daily_tasks.csv';
             const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
-
-            // For mobile, opening in a new window/tab is often the most reliable way to trigger download.
-            // Some browsers might still just display the content, but it's the best cross-platform approach without server-side.
             const newWindow = window.open(dataUri, '_blank');
             if (newWindow) {
                 newWindow.focus();
@@ -1060,10 +1176,10 @@
 
         // Initial load
         window.onload = function() {
+            loadState();
             setCurrentDate();
             updateUI();
         };
     </script>
 </body>
 </html>
-�
