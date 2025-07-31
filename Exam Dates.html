@@ -3,1212 +3,1055 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBPS 2025-26 All Exams Important Dates & Task Tracker</title>
+    <title>Daily Task Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F2F2F2;
-            color: #003F5C;
+            background-color: #e0f2fe; /* Lighter blue background */
+            color: #333;
+            line-height: 1.6;
         }
-        .card {
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
             background-color: #ffffff;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
-        .timeline-container {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px 0;
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
         }
-        .timeline-container::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: #6B9DB3;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1a202c;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
         }
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            background-color: inherit;
-            width: 50%;
+        .header p {
+            font-size: 1.2rem;
+            color: #4b5563;
         }
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            right: -12.5px;
-            background-color: #003F5C;
-            border: 4px solid white;
-            top: 15px;
-            border-radius: 50%;
-            z-index: 1;
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #bfdbfe; /* Softer blue border */
+            padding-bottom: 0.75rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
         }
-        .left {
-            left: 0;
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0.5rem;
+            border-bottom: 1px solid #e0e7eb; /* Softer border */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            border-radius: 8px; /* Rounded corners for task items */
+            margin-bottom: 0.5rem;
         }
-        .right {
-            left: 50%;
+        .task-item:last-child {
+            border-bottom: none;
         }
-        .left::before {
-            content: " ";
-            height: 0;
-            position: absolute;
-            top: 22px;
-            width: 0;
-            z-index: 1;
-            right: 30px;
-            border: medium solid white;
-            border-width: 10px 0 10px 10px;
-            border-color: transparent transparent transparent white;
+        .task-item:hover {
+            background-color: #f0f9ff; /* Lighter hover background */
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
-        .right::before {
-            content: " ";
-            height: 0;
-            position: absolute;
-            top: 22px;
-            width: 0;
-            z-index: 1;
-            left: 30px;
-            border: medium solid white;
-            border-width: 10px 10px 10px 0;
-            border-color: transparent white transparent transparent;
+        .checkbox-container {
+            width: 28px;
+            height: 28px;
+            border: 2px solid #9ca3af;
+            border-radius: 8px; /* More rounded checkbox */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.2rem;
+            transition: all 0.3s ease-in-out;
+            flex-shrink: 0;
         }
-        .right::after {
-            left: -12.5px;
+        .checkbox-container.completed {
+            background-color: #10b981; /* Green */
+            border-color: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
         }
-        .content {
-            padding: 20px 30px;
-            background-color: white;
-            position: relative;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        .checkbox-container.completed .fa-check {
+            color: #fff;
+            font-size: 1.2rem;
         }
-        @media screen and (max-width: 767px) {
-            .timeline-container::after {
-                left: 31px;
-            }
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-            .timeline-item::before {
-                left: 60px;
-                border-width: 10px 10px 10px 0;
-                border-color: transparent white transparent transparent;
-            }
-            .left::after, .right::after {
-                left: 18px;
-            }
-            .left, .right {
-                left: 0%;
-            }
+        .task-text {
+            flex-grow: 1;
+            font-size: 1.15rem;
+            color: #374151;
+            transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
         }
-        .task-completed {
+        .task-text.completed {
             text-decoration: line-through;
-            color: #6B9DB3;
+            color: #6b7280;
+            font-style: italic;
         }
-        /* Table row styling for readability */
-        table tbody tr:nth-child(odd) {
-            background-color: #F8F8F8; /* Lighter background for odd rows */
-        }
-        table tbody tr:nth-child(even) {
-            background-color: #FFFFFF; /* White background for even rows */
-        }
-        /* Removed hover for mobile optimization */
-        .message-box {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #4CAF50; /* Green for success */
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
+        .smiley-emoji {
+            margin-left: 0.8rem;
+            font-size: 1.5rem;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: scale(0.8);
         }
-        .message-box.show {
+        .smiley-emoji.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .add-task-form {
+            background-color: #f0f9ff; /* Light blue background */
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2.5rem;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+        .add-task-form h3 {
+            color: #2563eb;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .add-task-form input,
+        .add-task-form select {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid #a7d3f2; /* Softer border */
+            border-radius: 8px;
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            color: #374151;
+            background-color: #fff;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .add-task-form input:focus,
+        .add-task-form select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+        .add-task-form button {
+            background: linear-gradient(90deg, #3b82f6, #2563eb); /* Gradient button */
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            border: none;
+        }
+        .add-task-form button:hover {
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+        }
+        .chart-container {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+        .chart-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid #bfdbfe;
+            padding-bottom: 0.75rem;
+        }
+        .notice {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: linear-gradient(45deg, #d1fae5, #a7f3d0); /* Gradient for positive notice */
+            color: #065f46;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: none;
+            box-shadow: 0 4px 12px rgba(6, 95, 70, 0.2);
+            animation: fadeIn 1s ease-out forwards;
+        }
+        .notice.visible {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .export-button {
+            background: linear-gradient(90deg, #10b981, #059669); /* Green gradient */
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+            border: none;
+            margin-top: 2rem;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .export-button:hover {
+            background: linear-gradient(90deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+        }
+        .copy-feedback {
+            margin-top: 1rem;
+            text-align: center;
+            color: #065f46;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+        .copy-feedback.visible {
             opacity: 1;
         }
-        /* Modal styles */
-        .modal {
+        .task-actions {
+            margin-left: auto; /* Pushes buttons to the right */
+            display: flex;
+            gap: 0.5rem;
+        }
+        .task-actions button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0.4rem;
+            border-radius: 4px;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .task-actions button.edit-btn {
+            color: #3b82f6; /* Blue for edit */
+        }
+        .task-actions button.edit-btn:hover {
+            background-color: #e0f2fe;
+        }
+        .task-actions button.delete-btn {
+            color: #ef4444; /* Red for delete */
+        }
+        .task-actions button.delete-btn:hover {
+            background-color: #fee2e2;
+        }
+
+        /* Custom Modal Styles */
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            visibility: hidden;
             opacity: 0;
-            transition: visibility 0s, opacity 0.3s ease-in-out;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
         }
-        .modal.show {
-            visibility: visible;
+        .modal-overlay.visible {
             opacity: 1;
+            visibility: visible;
         }
         .modal-content {
-            background-color: white;
+            background-color: #fff;
             padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-        }
-        .modal-close-btn {
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #6B9DB3;
-        }
-        /* Ensure buttons always have their base color, and active state applies on press */
-        button {
-            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            outline: none; /* Remove default focus outline */
-        }
-        button:focus {
-            box-shadow: 0 0 0 2px rgba(0, 63, 92, 0.5); /* Example: dark blue ring */
-        }
-
-        /* Button color definitions */
-        .btn-dark-blue {
-            background-color: #003F5C;
-            color: white;
-        }
-        .btn-dark-blue:active {
-            background-color: #002A3D; /* Darker shade for active state */
-        }
-
-        .btn-green {
-            background-color: #4CAF50; /* Green */
-            color: white;
-        }
-        .btn-green:active {
-            background-color: #45A049; /* Darker green for active state */
-        }
-
-        .btn-blue {
-            background-color: #3B82F6; /* Standard Blue */
-            color: white;
-        }
-        .btn-blue:active {
-            background-color: #2563EB; /* Darker blue for active state */
-        }
-
-        .btn-red {
-            background-color: #EF4444; /* Standard Red */
-            color: white;
-        }
-        .btn-red:active {
-            background-color: #DC2626; /* Darker red for active state */
-        }
-
-        .btn-gray {
-            background-color: #D1D5DB; /* Gray for cancel */
-            color: #4B5563;
-        }
-        .btn-gray:active {
-            background-color: #9CA3AF; /* Darker gray for active state */
-        }
-
-        /* Specific styles for filter buttons (All, Completed, Uncompleted) */
-        .btn-filter-selected {
-            background-color: #003F5C; /* Dark blue when selected */
-            color: white;
-        }
-        .btn-filter-selected:active {
-            background-color: #002A3D; /* Darker shade when selected and active */
-        }
-
-        .btn-filter-unselected {
-            background-color: white; /* White when unselected */
-            color: #003F5C; /* Dark text when unselected */
-            border: 1px solid #003F5C; /* Optional: add a border to unselected for clarity */
-        }
-        .btn-filter-unselected:active {
-            background-color: #E0E0E0; /* Light gray when unselected and active */
-            color: #003F5C;
-        }
-
-
-        .cursor-pointer.active-category-card { /* Active state for category cards */
-            background-color: #6B9DB3;
-            color: white;
-        }
-        .total-time-box {
-            background-color: #A7D5E5;
-            border-radius: 0.75rem;
-            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
             text-align: center;
+            max-width: 400px;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .modal-overlay.visible .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .modal-content h4 {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: #003F5C;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            min-width: 100px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .modal-buttons button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: none;
+        }
+        .modal-buttons .confirm-btn {
+            background-color: #ef4444; /* Red for confirm */
+            color: #fff;
+        }
+        .modal-buttons .confirm-btn:hover {
+            background-color: #dc2626;
+            transform: translateY(-1px);
+        }
+        .modal-buttons .cancel-btn {
+            background-color: #e5e7eb; /* Light gray for cancel */
+            color: #374151;
+        }
+        .modal-buttons .cancel-btn:hover {
+            background-color: #d1d5db;
+            transform: translateY(-1px);
         }
 
-        /* Responsive layout for buttons and total time */
-        .schedule-controls {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem; /* Space between items */
-            margin-bottom: 1rem;
+        /* Responsive Adjustments for Mobile */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem; /* Smaller margin on mobile */
+                padding: 1rem; /* Smaller padding on mobile */
+                border-radius: 8px; /* Slightly less rounded */
+            }
+            .header h1 {
+                font-size: 2rem; /* Smaller font size for header */
+            }
+            .header p {
+                font-size: 1rem; /* Smaller font size for date */
+            }
+            .section-title {
+                font-size: 1.5rem; /* Smaller section titles */
+                margin-bottom: 1rem;
+            }
+            .task-item {
+                padding: 0.75rem 0.25rem; /* Smaller padding for task items */
+            }
+            .task-text {
+                font-size: 1rem; /* Smaller task text */
+            }
+            .smiley-emoji {
+                font-size: 1.2rem; /* Smaller emoji */
+            }
+            .add-task-form {
+                padding: 1rem; /* Smaller padding for form */
+            }
+            .add-task-form h3 {
+                font-size: 1.2rem; /* Smaller form title */
+            }
+            .add-task-form input,
+            .add-task-form select,
+            .add-task-form button {
+                padding: 0.7rem; /* Smaller padding for form elements */
+                font-size: 0.9rem; /* Smaller font size for form elements */
+            }
+            .chart-container {
+                margin-top: 2rem;
+                padding: 1rem;
+                border-radius: 8px;
+            }
+            .chart-title {
+                font-size: 1.3rem; /* Smaller chart titles */
+            }
+            .export-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            .notice {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+            /* Ensure charts don't become too small vertically on mobile */
+            canvas {
+                min-height: 250px;
+            }
         }
-        @media (min-width: 768px) { /* On medium screens and up, make it a row */
-            .schedule-controls {
-                flex-direction: row;
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .task-text {
+                font-size: 0.95rem;
+            }
+            .smiley-emoji {
+                font-size: 1rem;
+            }
+            .task-actions button {
+                font-size: 0.9rem;
+                padding: 0.2rem;
+            }
+            .modal-content {
+                padding: 1.5rem;
+                margin: 0 1rem; /* Add horizontal margin for very small screens */
+            }
+            .modal-content h4 {
+                font-size: 1.2rem;
+            }
+            .modal-buttons button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            canvas {
+                min-height: 200px; /* Even smaller min-height for very small screens */
             }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>Daily Task Tracker</h1>
+            <p id="current-date"></p>
+        </div>
 
-    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <!-- Daily Must Tasks -->
+        <div class="mb-8">
+            <h2 class="section-title">Daily Must Tasks</h2>
+            <div id="daily-must-tasks"></div>
+        </div>
 
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-[#003F5C] mb-4">Your 2025-26 Banking Exam Calendar & Task Tracker</h1>
-            <p class="text-lg text-[#366E8A]">A visual guide to all key dates for Graduate-level IBPS exams and your personalized task manager.</p>
-        </header>
+        <!-- Lifestyle Activity -->
+        <div class="mb-8">
+            <h2 class="section-title">Lifestyle Activity</h2>
+            <div id="lifestyle-tasks"></div>
+        </div>
 
-        <main>
-            <section id="exam-timeline" class="mb-12">
-                <h2 class="text-3xl font-bold text-center mb-8 text-[#003F5C]">Important Exam Dates</h2>
-                <div class="timeline-container">
-                    <div class="timeline-item left">
-                        <div class="content">
-                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS Specialist Officer (IT)</h3>
-                            <p class="text-sm text-[#366E8A]">Notification Release: June 30, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Online Application: July 1 - July 21, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Prelims Exam: August 30, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Mains Exam: November 9, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Interview: To be announced</p>
-                            <p class="text-sm text-[#366E8A]">Provisional Allotment: To be announced</p>
-                        </div>
-                    </div>
+        <!-- Daily Exam Related and Other Tasks -->
+        <div class="mb-8">
+            <h2 class="section-title">Daily Exam Related and Other Tasks</h2>
+            <div id="exam-other-tasks"></div>
 
-                    <div class="timeline-item right">
-                        <div class="content">
-                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS Probationary Officer (PO)</h3>
-                            <p class="text-sm text-[#366E8A]">Notification Release: June 30, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Online Application: July 1 - July 21, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Prelims Exam: August 17, 23, 24, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Mains Exam: October 12, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Interview: November-December 2025</p>
-                            <p class="text-sm text-[#366E8A]">Final Result: January-February 2026</p>
-                        </div>
-                    </div>
+            <div class="add-task-form">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700" id="exam-form-title">Add New Exam/Other Task</h3>
+                <input type="text" id="new-task-name" placeholder="Task Name" class="focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <input type="number" id="new-task-duration" placeholder="Duration (minutes)" class="focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <select id="new-task-topic" class="focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">Select Topic</option>
+                    <option value="Maths">Maths</option>
+                    <option value="Reasoning">Reasoning</option>
+                    <option value="Computer Knowledge">Computer Knowledge</option>
+                    <option value="English">English</option>
+                    <option value="Current Affairs">Current Affairs</option>
+                    <option value="New Skill">New Skill</option>
+                    <option value="Other Activity">Other Activity</option>
+                    <option value="Home Activity">Home Activity</option>
+                </select>
+                <button onclick="handleExamTaskSubmission()" class="w-full" id="exam-form-button">Add Task</button>
+            </div>
+        </div>
 
-                    <div class="timeline-item left">
-                        <div class="content">
-                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS Clerk (Customer Service Associates)</h3>
-                            <p class="text-sm text-[#366E8A]">Notification Release: Expected July 2025</p>
-                            <p class="text-sm text-[#366E8A]">Online Application: Expected July 3 - August 3, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Prelims Exam: October 4, 5, 11, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Mains Exam: November 29, 2025</p>
-                        </div>
-                    </div>
+        <!-- Charts Section -->
+        <div class="chart-container">
+            <h2 class="chart-title">Task Completion by Section</h2>
+            <canvas id="taskCompletionBySectionChart"></canvas>
+        </div>
 
-                    <div class="timeline-item right">
-                        <div class="content">
-                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS RRB Officer Scale I (PO)</h3>
-                            <p class="text-sm text-[#366E8A]">Notification Release: Expected September 2025</p>
-                            <p class="text-sm text-[#366E8A]">Online Application: Expected July 31 - August 29, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Prelims Exam: November 22, 23, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Mains Exam: December 28, 2025</p>
-                        </div>
-                    </div>
+        <div class="chart-container">
+            <h2 class="chart-title">Task Completion Rates</h2>
+            <canvas id="taskCompletionRatesChart"></canvas>
+        </div>
 
-                    <div class="timeline-item left">
-                        <div class="content">
-                            <h3 class="font-bold text-xl text-[#003F5C] mb-2">IBPS RRB Office Assistant (Clerk)</h3>
-                            <p class="text-sm text-[#366E8A]">Prelims Exam: December 5, 7, 13, 14, 2025</p>
-                            <p class="text-sm text-[#366E8A]">Mains Exam: February 1, 2026</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <button class="export-button" onclick="exportTasksToCSV()">Download Tasks as CSV</button>
+        <div id="copy-feedback" class="copy-feedback"></div>
 
-            <section id="daily-study-schedule" class="mb-12">
-                <h2 class="text-3xl font-bold text-center mb-8 text-[#003F5C]">Your Detailed Daily Study Schedule</h2>
-                <div class="card overflow-x-auto">
-                    <table class="min-w-full bg-white rounded-lg overflow-hidden">
-                        <thead class="bg-[#A7D5E5] text-[#003F5C] uppercase text-sm leading-normal">
-                            <tr>
-                                <th class="py-3 px-6 text-left">Time Slot</th>
-                                <th class="py-3 px-6 text-left">Category Focus</th>
-                                <th class="py-3 px-6 text-left">Specific Topics/Activities</th>
-                                <th class="py-3 px-6 text-left">Daily Practice Targets</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-[#366E8A] text-sm font-light">
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">New tricks (02:00 AM - 04:30 AM)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Maths tricks and Reasoning important data</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Simplification/Approximation/Number Series (Practice 30-40 questions)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">4 Viral maths videos</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Morning (07:30 AM - 10:30 AM)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Reasoning Ability (3 hours)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">7:30 AM - 9:00 AM: Puzzles (2-3 sets daily) & Seating Arrangements (2-3 sets daily)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">60-80 questions</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">9:00 AM - 10:00 AM: Syllogism/Inequalities (Practice 20-30 questions)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">(Emphasis on 2-3 sets of high-level puzzles/seating arrangements)</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">10:00 AM - 10:30AM: Miscellaneous Reasoning (Blood Relations, Direction Sense, Coding-Decoding) (Practice 20-30 questions)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Late Morning (10:30 AM - 12:30 PM)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Quantitative Aptitude (2 hours)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">10:30 AM - 11:30 AM: Data Interpretation (2-3 sets daily)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">50-70 questions(Including 2-3 DI sets and a mix of other topics)</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">11:30 AM - 12:30 PM: Simplification/Approximation/Number Series (Practice 30-40 questions)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Lunch & Rest (12:30 PM - 01:30 PM)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Afternoon (1:30 PM - 5:00 PM)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">English Language (3.5 hours)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">1:30 PM - 4:00 PM: Grammar Rules</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">40-50 questions</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">4:00 PM - 5:00 PM: Reading Comprehension (2-3 passages daily)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">(Including 2-3 RC passages and a mix of grammar/vocabulary)</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Short Break (5:00 PM - 5:30 PM)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Evening (5:30 PM - 8:30 PM)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Professional Knowledge (IT) / General Awareness & Banking Awareness (2 hours)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">5:30 PM - 6:30 PM: IT Professional Knowledge (Focus on 1-2 topics from Mains syllabus daily, e.g., DBMS, Networking fundamentals)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">15-20 conceptual questions for IT PK</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">6:30 PM - 8:30 PM: Current Affairs & Banking Awareness (Daily reading of editorials, monthly PDFs, banking terms)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Continuous learning, note-taking</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Night (8:30 PM - 10:00 PM)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Mock Test Analysis / Revision (1 hour)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Alternate days: Full-length Prelims Mock Test (timed, 1 hour)</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Detailed analysis of mock tests, revision of weak areas</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">On non-mock days: Detailed analysis of previous mock tests, revisiting weak areas, revising formulas/shortcuts</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]">Daily: Quick revision of notes, especially for high-frequency questions</td>
-                                <td class="py-3 px-6 border-b border-[#F2F2F2]"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
 
-            <section id="task-manager" class="mb-12">
-                <h2 class="text-3xl font-bold text-center mb-8 text-[#003F5C]">Your Study Task Manager</h2>
-
-                <div class="card mb-8">
-                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Add New Task</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div>
-                            <label for="taskNameInput" class="block text-sm font-medium text-[#366E8A] mb-1">Task Name</label>
-                            <input type="text" id="taskNameInput" placeholder="e.g., Complete DI set"
-                                class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none">
-                        </div>
-                        <div>
-                            <label for="categoryInput" class="block text-sm font-medium text-[#366E8A] mb-1">Category of Task</label>
-                            <select id="categoryInput"
-                                class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none bg-white">
-                                <option value="">Select Category</option>
-                                <option value="Quant">Quant</option>
-                                <option value="Reasoning">Reasoning</option>
-                                <option value="English">English</option>
-                                <option value="CA">Current Affairs</option>
-                                <option value="Computer Knowledge">Computer Knowledge</option>
-                                <option value="Other Task">Other Task</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="timeTakenInput" class="block text-sm font-medium text-[#366E8A] mb-1">Time Taken (HH:MM)</label>
-                            <input type="text" id="timeTakenInput" placeholder="e.g., 01:30"
-                                class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none"
-                                pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Time in HH:MM format (e.g., 01:30)">
-                        </div>
-                        <div class="flex items-end col-span-full md:col-span-1">
-                            <button id="addTaskBtn"
-                                class="w-full btn-green py-2 px-4 rounded-md text-white font-bold">
-                                Add Task
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-8">
-                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Your Schedule</h3>
-                    <div class="schedule-controls">
-                        <button id="allTasksViewBtn" class="py-2 px-4 rounded-md">All Tasks</button>
-                        <button id="completedTasksViewBtn" class="py-2 px-4 rounded-md">Completed Tasks</button>
-                        <button id="uncompletedTasksViewBtn" class="py-2 px-4 rounded-md">Uncompleted Tasks</button>
-                        <div id="totalTimeForCurrentView" class="total-time-box">
-                            00:00
-                        </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table id="scheduleTable" class="min-w-full bg-white rounded-lg overflow-hidden">
-                            <thead class="bg-[#A7D5E5] text-[#003F5C] uppercase text-sm leading-normal">
-                                <tr>
-                                    <th class="py-3 px-6 text-left">Task</th>
-                                    <th class="py-3 px-6 text-left">Category of Task</th>
-                                    <th class="py-3 px-6 text-left">Due Date</th>
-                                    <th class="py-3 px-6 text-left">Time Taken</th>
-                                    <th class="py-3 px-6 text-center">Status</th>
-                                    <th class="py-3 px-6 text-center">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="scheduleTableBody" class="text-[#366E8A] text-sm font-light">
-                                <!-- Tasks will be rendered here by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card mb-8">
-                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Category Progress</h3>
-                    <div id="categoryProgressContainer" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center">
-                        <!-- Category progress cards will be rendered here by JavaScript -->
-                    </div>
-                </div>
-
-                <div class="card mb-8">
-                    <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Your Progress Dashboard</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                        <div class="p-4 bg-[#A7D5E5] rounded-md">
-                            <p class="text-sm font-semibold text-[#003F5C]">Total Tasks</p>
-                            <p id="totalTasksDisplay" class="text-3xl font-bold text-[#003F5C]">0</p>
-                        </div>
-                        <div class="p-4 bg-[#A7D5E5] rounded-md">
-                            <p class="text-sm font-semibold text-[#003F5C]">Completed Tasks</p>
-                            <p id="completedTasksDisplay" class="text-3xl font-bold text-[#003F5C]">0</p>
-                        </div>
-                        <div class="p-4 bg-[#A7D5E5] rounded-md">
-                            <p class="text-sm font-semibold text-[#003F5C]">Completion Rate</p>
-                            <p id="completionPercentageDisplay" class="text-3xl font-bold text-[#003F5C]">0%</p>
-                        </div>
-                        <!-- Removed Total Time Spent from here -->
-                    </div>
-                    <div class="flex justify-center space-x-4 mt-6">
-                        <button id="dailyReportBtn" class="btn-dark-blue py-2 px-4 rounded-md">Daily Report</button>
-                        <button id="weeklyReportBtn" class="btn-dark-blue py-2 px-4 rounded-md">Weekly Report</button>
-                    </div>
-                    <div class="flex justify-center mt-6">
-                        <button id="saveDataBtn" class="btn-green py-2 px-4 rounded-md">Save Data (CSV)</button>
-                    </div>
-                </div>
-            </section>
-        </main>
+        <div class="notice" id="positive-day-notice">
+            Your day is looking positive! Keep up the great work! 😊
+        </div>
     </div>
 
-    <!-- Edit Task Modal -->
-    <div id="editTaskModal" class="modal">
+    <!-- Custom Confirmation Modal -->
+    <div id="confirm-modal-overlay" class="modal-overlay">
         <div class="modal-content">
-            <span class="modal-close-btn" onclick="closeEditModal()">&times;</span>
-            <h3 class="text-xl font-bold mb-4 text-[#003F5C]">Edit Task</h3>
-            <div class="mb-4">
-                <label for="editTaskNameInput" class="block text-sm font-medium text-[#366E8A] mb-1">Task Name</label>
-                <input type="text" id="editTaskNameInput"
-                    class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none">
-            </div>
-            <div class="mb-4">
-                <label for="editCategoryInput" class="block text-sm font-medium text-[#366E8A] mb-1">Category of Task</label>
-                <select id="editCategoryInput"
-                    class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none bg-white">
-                    <option value="">Select Category</option>
-                    <option value="Quant">Quant</option>
-                    <option value="Reasoning">Reasoning</option>
-                    <option value="English">English</option>
-                    <option value="CA">Current Affairs</option>
-                    <option value="Computer Knowledge">Computer Knowledge</option>
-                    <option value="Other Task">Other Task</option>
-                </select>
-            </div>
-            <div class="mb-6">
-                <label for="editTimeTakenInput" class="block text-sm font-medium text-[#366E8A] mb-1">Time Taken (HH:MM)</label>
-                <input type="text" id="editTimeTakenInput" placeholder="e.g., 01:30"
-                    class="w-full p-2 border border-[#A7D5E5] rounded-md focus:ring-2 focus:ring-[#6B9DB3] focus:border-transparent outline-none"
-                    pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" title="Time in HH:MM format (e.g., 01:30)">
-            </div>
-            <div class="flex justify-end space-x-4">
-                <button id="updateTaskBtn"
-                    class="btn-dark-blue py-2 px-4 rounded-md">
-                    Update Task
-                </button>
-                <button onclick="closeEditModal()"
-                    class="btn-gray py-2 px-4 rounded-md">
-                    Cancel
-                </button>
+            <h4 id="confirm-modal-message">Are you sure you want to delete this task?</h4>
+            <div class="modal-buttons">
+                <button class="confirm-btn" id="confirm-modal-yes">Yes</button>
+                <button class="cancel-btn" id="confirm-modal-no">No</button>
             </div>
         </div>
     </div>
 
-
     <script>
-        let tasks = [];
-        let currentCategoryFilter = 'all'; // Default to show all tasks
-        let currentCompletionFilter = 'all'; // 'all', 'completed', 'uncompleted'
+        // Initial task data
+        let dailyMustTasks = [
+            { name: "10 gratitude to universe", completed: false },
+            { name: "ETF", completed: false },
+            { name: "Read your affirmations", completed: false },
+            { name: "Magic Water", completed: false },
+            { name: "108 ho'opnopo", completed: false },
+            { name: "Visualization in front of God", completed: false },
+            { name: "Go to temple", completed: false },
+            { name: "Write Affirmations 3 times", completed: false },
+            { name: "Write Affirmation 6 Times", completed: false },
+            { name: "EFT", completed: false },
+            { name: "DMP", completed: false },
+            { name: "Write Affirmations 9 times", completed: false },
+            { name: "Ho'opnopo Music", completed: false },
+            { name: "Mirror and water techniques with affirmations (1)", completed: false },
+            { name: "Mirror and water techniques with affirmations (2)", completed: false },
+            { name: "Mirror and water techniques with affirmations (3)", completed: false },
+            { name: "Mirror and water techniques with affirmations (4)", completed: false },
+            { name: "Mirror and water techniques with affirmations (5)", completed: false }
+        ];
 
-        let currentEditingTaskId = null; // To store the ID of the task being edited
+        let lifestyleTasks = [
+            { name: "30 minutes of exercises", completed: false },
+            { name: "Love myself and love everyone and help everyone unconditionally.", completed: false },
+            { name: "Read / Learn about new technology and finance related knowledge", completed: false },
+            { name: "Earn money daily (Increasing day by day)", completed: false }
+        ];
 
-        const categories = ["Quant", "Reasoning", "English", "CA", "Computer Knowledge", "Other Task"];
+        let examOtherTasks = []; // User can add these dynamically
 
-        // Helper to format date for display (DD/MM/YY)
-        function formatDateForDisplay(dateString) {
-            if (!dateString) return '';
-            const [year, month, day] = dateString.split('-');
-            return `${day}/${month}/${year.slice(2)}`; // Slice to get last two digits of year
-        }
+        // Chart instances
+        let taskCompletionBySectionChart;
+        let taskCompletionRatesChart;
 
-        // Helper to get today's date in YYYY-MM-DD format
-        function getTodayDateString() {
-            const today = new Date();
-            return today.toISOString().split('T')[0];
-        }
+        // Variable to store the index of the task being edited
+        let editingTaskIndex = null;
 
-        // Helper to convert HH:MM string to total minutes
-        function convertHhMmToMinutes(hhMmString) {
-            if (!hhMmString || hhMmString === '00:00') return 0;
-            const parts = hhMmString.split(':');
-            if (parts.length !== 2) return 0; // Invalid format
-            const hours = parseInt(parts[0], 10);
-            const minutes = parseInt(parts[1], 10);
-            if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) return 0; // Invalid numbers
-            return hours * 60 + minutes;
-        }
+        /**
+         * Renders tasks for a given section.
+         * @param {Array<Object>} tasks - The array of task objects.
+         * @param {string} containerId - The ID of the HTML element to render tasks into.
+         * @param {string} sectionName - The name of the section (e.g., 'dailyMust', 'lifestyle', 'examOther').
+         */
+        function renderTasks(tasks, containerId, sectionName) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ''; // Clear previous tasks
 
-        // Helper to convert total minutes to HH:MM string
-        function convertMinutesToHhMm(totalMinutes) {
-            if (totalMinutes === 0) return '00:00';
-            const hours = Math.floor(totalMinutes / 60);
-            const minutes = totalMinutes % 60;
-            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-        }
+            tasks.forEach((task, index) => {
+                const taskItem = document.createElement('div');
+                taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
 
-        // Function to save tasks to localStorage
-        function saveTasks() {
-            localStorage.setItem('ibpsTasks', JSON.stringify(tasks));
-            localStorage.setItem('lastAccessDate', getTodayDateString()); // Update last access date
-        }
-
-        // Function to load tasks from localStorage and apply daily cleanup logic
-        function loadTasks() {
-            const storedTasks = localStorage.getItem('ibpsTasks');
-            if (storedTasks) {
-                tasks = JSON.parse(storedTasks);
-            }
-
-            const todayString = getTodayDateString();
-            const lastAccessDate = localStorage.getItem('lastAccessDate');
-
-            // If it's a new day, filter out completed tasks from previous days
-            if (lastAccessDate && lastAccessDate !== todayString) {
-                tasks = tasks.filter(task => {
-                    // Keep tasks that are not completed OR are due today/in the future
-                    return !task.completed || task.originalDate >= todayString;
-                });
-            }
-            saveTasks(); // Save tasks (after any filtering) and update lastAccessDate
-        }
-
-        // Function to filter tasks based on the current category and completion filter
-        function getFilteredTasks() {
-            let filtered = tasks;
-
-            // Apply category filter first
-            if (currentCategoryFilter !== 'all') {
-                filtered = filtered.filter(task => task.category === currentCategoryFilter);
-            }
-
-            // Apply completion filter
-            if (currentCompletionFilter === 'completed') {
-                filtered = filtered.filter(task => task.completed);
-            } else if (currentCompletionFilter === 'uncompleted') {
-                filtered = filtered.filter(task => !task.completed);
-            }
-            // If currentCompletionFilter is 'all', no further filtering is needed
-
-            // Sort tasks by due date (ascending)
-            filtered.sort((a, b) => {
-                if (a.originalDate < b.originalDate) return -1;
-                if (a.originalDate > b.originalDate) return 1;
-                return 0; // If dates are the same, maintain original order
-            });
-
-            return filtered;
-        }
-
-        // Function to render tasks in the table and update dashboard
-        function renderTasks() {
-            const tableBody = document.getElementById('scheduleTableBody');
-            tableBody.innerHTML = ''; // Clear existing rows
-
-            const filteredTasks = getFilteredTasks();
-
-            if (filteredTasks.length === 0) {
-                const row = tableBody.insertRow();
-                const cell = row.insertCell();
-                cell.colSpan = 6; // Span across all columns (Task, Category, Due Date, Time Taken, Status, Actions)
-                cell.className = 'py-3 px-6 text-center text-[#366E8A]';
-                cell.textContent = 'No tasks to display for this view.';
-            } else {
-                filteredTasks.forEach(task => {
-                    const row = tableBody.insertRow();
-                    row.className = `border-b border-[#F2F2F2] ${task.completed ? 'task-completed' : ''}`;
-
-                    const taskCell = row.insertCell();
-                    taskCell.className = 'py-3 px-6 text-left';
-                    taskCell.textContent = task.name;
-
-                    const categoryCell = row.insertCell();
-                    categoryCell.className = 'py-3 px-6 text-left';
-                    categoryCell.textContent = task.category;
-
-                    const dateCell = row.insertCell();
-                    dateCell.className = 'py-3 px-6 text-left';
-                    dateCell.textContent = task.displayDate; // Use displayDate
-
-                    const timeTakenCell = row.insertCell();
-                    timeTakenCell.className = 'py-3 px-6 text-left';
-                    timeTakenCell.textContent = convertMinutesToHhMm(task.timeTaken || 0); // Display formatted time
-
-                    const statusCell = row.insertCell();
-                    statusCell.className = 'py-3 px-6 text-center';
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.checked = task.completed;
-                    checkbox.className = 'form-checkbox h-5 w-5 text-[#003F5C] rounded focus:ring-[#003F5C]';
-                    checkbox.dataset.taskId = task.id; // Store task ID
-                    checkbox.addEventListener('change', toggleTaskCompletion);
-                    statusCell.appendChild(checkbox);
-
-                    const actionsCell = row.insertCell();
-                    actionsCell.className = 'py-3 px-6 text-center flex space-x-2 justify-center'; // Added flex for buttons
-
-                    // Edit Button
-                    const editBtn = document.createElement('button');
-                    editBtn.textContent = 'Edit';
-                    editBtn.className = 'btn-blue py-1 px-3 rounded-md text-xs'; // Applied btn-blue
-                    editBtn.dataset.taskId = task.id;
-                    editBtn.addEventListener('click', () => openEditModal(task.id));
-                    actionsCell.appendChild(editBtn);
-
-                    // Delete Button
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.textContent = 'Delete';
-                    deleteBtn.className = 'btn-red py-1 px-3 rounded-md text-xs ml-2'; // Applied btn-red and added margin
-                    deleteBtn.dataset.taskId = task.id;
-                    deleteBtn.addEventListener('click', deleteTask);
-                    actionsCell.appendChild(deleteBtn);
-                });
-            }
-
-            // Update dashboard based on ALL tasks (for overall progress)
-            updateDashboard();
-            renderCategoryProgressSummary(); // Always re-render category progress
-            updateTotalTimeForCurrentView(filteredTasks); // Update total time for the tasks currently displayed
-            updateFilterButtonStates(); // Update the visual state of filter buttons
-        }
-
-        // Function to update the "Total Time for Current View" display
-        function updateTotalTimeForCurrentView(tasksToCount) {
-            let totalTimeSpentMinutes = 0;
-            tasksToCount.forEach(task => {
-                totalTimeSpentMinutes += (task.timeTaken || 0);
-            });
-            const totalTimeSpentHhMm = convertMinutesToHhMm(totalTimeSpentMinutes);
-            document.getElementById('totalTimeForCurrentView').textContent = totalTimeSpentHhMm; // Only show time, no text
-        }
-
-        // Function to update the visual state of the filter buttons
-        function updateFilterButtonStates() {
-            const allBtn = document.getElementById('allTasksViewBtn');
-            const completedBtn = document.getElementById('completedTasksViewBtn');
-            const uncompletedBtn = document.getElementById('uncompletedTasksViewBtn');
-
-            // Reset all filter buttons to unselected state first
-            allBtn.classList.remove('btn-filter-selected');
-            allBtn.classList.add('btn-filter-unselected');
-            completedBtn.classList.remove('btn-filter-selected');
-            completedBtn.classList.add('btn-filter-unselected');
-            uncompletedBtn.classList.remove('btn-filter-selected');
-            uncompletedBtn.classList.add('btn-filter-unselected');
-
-
-            // Add selected class to the currently active filter button
-            if (currentCompletionFilter === 'all') {
-                allBtn.classList.remove('btn-filter-unselected');
-                allBtn.classList.add('btn-filter-selected');
-            } else if (currentCompletionFilter === 'completed') {
-                completedBtn.classList.remove('btn-filter-unselected');
-                completedBtn.classList.add('btn-filter-selected');
-            } else if (currentCompletionFilter === 'uncompleted') {
-                uncompletedBtn.classList.remove('btn-filter-unselected');
-                uncompletedBtn.classList.add('btn-filter-selected');
-            }
-        }
-
-
-        // Function to add a new task
-        function addTask() {
-            const taskNameInput = document.getElementById('taskNameInput');
-            const categoryInput = document.getElementById('categoryInput');
-            const timeTakenInput = document.getElementById('timeTakenInput');
-
-            const taskName = taskNameInput.value.trim();
-            const category = categoryInput.value;
-            const timeTaken = timeTakenInput.value.trim();
-
-            if (taskName && category) {
-                // Validate time format if provided
-                if (timeTaken && !timeTakenInput.checkValidity()) {
-                    const messageBox = document.createElement('div');
-                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
-                    messageBox.textContent = 'Please enter time in HH:MM format (e.g., 01:30).';
-                    document.body.appendChild(messageBox);
-                    setTimeout(() => {
-                        messageBox.remove();
-                    }, 3000);
-                    return; // Stop function execution
-                }
-
-                const todayString = getTodayDateString();
-                const newTask = {
-                    id: crypto.randomUUID(), // Generate a unique ID
-                    name: taskName,
-                    category: category,
-                    originalDate: todayString, // Automatically set to today
-                    displayDate: formatDateForDisplay(todayString), // Formatted for display
-                    completed: false,
-                    timeTaken: convertHhMmToMinutes(timeTaken) // Store time in minutes
+                const checkboxContainer = document.createElement('div');
+                checkboxContainer.className = `checkbox-container ${task.completed ? 'completed' : ''}`;
+                checkboxContainer.innerHTML = `<i class="fas fa-check"></i>`;
+                checkboxContainer.onclick = (e) => {
+                    e.stopPropagation(); // Prevent task item click from triggering
+                    toggleTaskCompletion(sectionName, index);
                 };
-                tasks.push(newTask);
-                saveTasks();
-                renderTasks(); // Re-render with current view
-                taskNameInput.value = ''; // Clear input fields
-                categoryInput.value = ''; // Reset category dropdown
-                timeTakenInput.value = ''; // Clear time input
-            } else {
-                const messageBox = document.createElement('div');
-                messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
-                messageBox.textContent = 'Please enter a task name and select a category.';
-                document.body.appendChild(messageBox);
-                setTimeout(() => {
-                    messageBox.remove();
-                }, 3000);
-            }
-        }
 
-        // Function to toggle task completion status
-        function toggleTaskCompletion(event) {
-            const taskId = event.target.dataset.taskId;
-            const taskIndex = tasks.findIndex(task => task.id === taskId);
-            if (taskIndex !== -1) {
-                tasks[taskIndex].completed = event.target.checked;
-                saveTasks();
-                renderTasks(); // Re-render to apply line-through style and update dashboard
-            }
-        }
+                const taskText = document.createElement('span');
+                taskText.className = `task-text ${task.completed ? 'completed' : ''}`;
+                taskText.textContent = task.name;
+                taskText.onclick = (e) => {
+                    e.stopPropagation(); // Prevent task item click from triggering
+                    toggleTaskCompletion(sectionName, index);
+                };
 
-        // Function to delete a task
-        function deleteTask(event) {
-            const taskId = event.target.dataset.taskId;
-            tasks = tasks.filter(task => task.id !== taskId);
-            saveTasks();
-            renderTasks();
-        }
 
-        // Function to open the edit modal
-        function openEditModal(taskId) {
-            currentEditingTaskId = taskId;
-            const task = tasks.find(t => t.id === taskId);
-
-            if (task) {
-                document.getElementById('editTaskNameInput').value = task.name;
-                document.getElementById('editCategoryInput').value = task.category;
-                document.getElementById('editTimeTakenInput').value = convertMinutesToHhMm(task.timeTaken || 0); // Pre-fill formatted time
-                document.getElementById('editTaskModal').classList.add('show');
-            }
-        }
-
-        // Function to close the edit modal
-        function closeEditModal() {
-            document.getElementById('editTaskModal').classList.remove('show');
-            currentEditingTaskId = null; // Clear the editing task ID
-        }
-
-        // Function to update the edited task
-        function updateEditedTask() {
-            if (!currentEditingTaskId) return;
-
-            const taskIndex = tasks.findIndex(task => task.id === currentEditingTaskId);
-            if (taskIndex !== -1) {
-                const updatedName = document.getElementById('editTaskNameInput').value.trim();
-                const updatedCategory = document.getElementById('editCategoryInput').value;
-                const updatedTimeTaken = document.getElementById('editTimeTakenInput').value.trim();
-
-                // Validate time format if provided
-                if (updatedTimeTaken && !document.getElementById('editTimeTakenInput').checkValidity()) {
-                    const messageBox = document.createElement('div');
-                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
-                    messageBox.textContent = 'Please enter time in HH:MM format (e.g., 01:30).';
-                    document.body.appendChild(messageBox);
-                    setTimeout(() => {
-                        messageBox.remove();
-                    }, 3000);
-                    return; // Stop function execution
+                if (sectionName === 'examOther' && task.duration) {
+                    taskText.textContent += ` (Duration: ${task.duration} mins, Topic: ${task.topic})`;
                 }
 
-                if (updatedName && updatedCategory) {
-                    tasks[taskIndex].name = updatedName;
-                    tasks[taskIndex].category = updatedCategory;
-                    tasks[taskIndex].timeTaken = convertHhMmToMinutes(updatedTimeTaken); // Update time in minutes
-                    saveTasks();
-                    renderTasks();
-                    closeEditModal();
+                const smileyEmoji = document.createElement('span');
+                smileyEmoji.className = `smiley-emoji ${task.completed ? 'visible' : ''}`;
+                smileyEmoji.textContent = '😊';
+
+                taskItem.appendChild(checkboxContainer);
+                taskItem.appendChild(taskText);
+
+                // Add edit and delete buttons only for Exam & Other tasks
+                if (sectionName === 'examOther') {
+                    const taskActions = document.createElement('div');
+                    taskActions.className = 'task-actions';
+
+                    const editButton = document.createElement('button');
+                    editButton.className = 'edit-btn';
+                    editButton.innerHTML = '<i class="fas fa-edit"></i>';
+                    editButton.title = 'Edit Task';
+                    editButton.onclick = (e) => {
+                        e.stopPropagation(); // Prevent task item click from triggering
+                        editExamTask(index);
+                    };
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'delete-btn';
+                    deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                    deleteButton.title = 'Delete Task';
+                    deleteButton.onclick = (e) => {
+                        e.stopPropagation(); // Prevent task item click from triggering
+                        deleteExamTask(index);
+                    };
+
+                    taskActions.appendChild(editButton);
+                    taskActions.appendChild(deleteButton);
+                    taskItem.appendChild(taskActions);
+                }
+
+                taskItem.appendChild(smileyEmoji);
+                container.appendChild(taskItem);
+            });
+        }
+
+        /**
+         * Toggles the completion status of a task.
+         * @param {string} sectionName - The name of the section.
+         * @param {number} index - The index of the task in its array.
+         */
+        function toggleTaskCompletion(sectionName, index) {
+            let tasks;
+            if (sectionName === 'dailyMust') {
+                tasks = dailyMustTasks;
+            } else if (sectionName === 'lifestyle') {
+                tasks = lifestyleTasks;
+            } else if (sectionName === 'examOther') {
+                tasks = examOtherTasks;
+            }
+
+            if (tasks && tasks[index]) {
+                tasks[index].completed = !tasks[index].completed;
+                updateUI();
+            }
+        }
+
+        /**
+         * Handles the submission of new or edited exam/other tasks.
+         */
+        function handleExamTaskSubmission() {
+            const taskNameInput = document.getElementById('new-task-name');
+            const taskDurationInput = document.getElementById('new-task-duration');
+            const taskTopicSelect = document.getElementById('new-task-topic');
+            const formButton = document.getElementById('exam-form-button');
+            const formTitle = document.getElementById('exam-form-title');
+
+            const name = taskNameInput.value.trim();
+            const duration = parseInt(taskDurationInput.value);
+            const topic = taskTopicSelect.value;
+
+            if (name && !isNaN(duration) && duration > 0 && topic) {
+                if (editingTaskIndex !== null) {
+                    // Edit existing task
+                    examOtherTasks[editingTaskIndex].name = name;
+                    examOtherTasks[editingTaskIndex].duration = duration;
+                    examOtherTasks[editingTaskIndex].topic = topic;
+                    editingTaskIndex = null; // Reset editing state
+                    formButton.textContent = 'Add Task';
+                    formTitle.textContent = 'Add New Exam/Other Task';
+                    showFeedbackMessage('Task updated successfully!', 'success');
                 } else {
-                    const messageBox = document.createElement('div');
-                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-50';
-                    messageBox.textContent = 'Task name and category cannot be empty.';
-                    document.body.appendChild(messageBox);
-                    setTimeout(() => {
-                        messageBox.remove();
-                    }, 3000);
+                    // Add new task
+                    examOtherTasks.push({
+                        name: name,
+                        completed: false,
+                        duration: duration,
+                        topic: topic
+                    });
+                    showFeedbackMessage('Task added successfully!', 'success');
                 }
+                taskNameInput.value = '';
+                taskDurationInput.value = '';
+                taskTopicSelect.value = '';
+                updateUI();
+            } else {
+                showFeedbackMessage('Please enter a valid task name, duration, and select a topic.', 'error');
             }
         }
 
+        /**
+         * Populates the form for editing an exam task.
+         * @param {number} index - The index of the task to edit.
+         */
+        function editExamTask(index) {
+            const task = examOtherTasks[index];
+            if (task) {
+                document.getElementById('new-task-name').value = task.name;
+                document.getElementById('new-task-duration').value = task.duration;
+                document.getElementById('new-task-topic').value = task.topic;
 
-        // Function to update the dashboard metrics based on ALL tasks (overall progress)
-        function updateDashboard() {
-            const totalTasks = tasks.length;
+                document.getElementById('exam-form-button').textContent = 'Save Changes';
+                document.getElementById('exam-form-title').textContent = 'Edit Exam/Other Task';
+                editingTaskIndex = index;
+            }
+        }
+
+        /**
+         * Deletes an exam task after confirmation.
+         * @param {number} index - The index of the task to delete.
+         */
+        function deleteExamTask(index) {
+            showConfirmModal('Are you sure you want to delete this task?', () => {
+                examOtherTasks.splice(index, 1);
+                updateUI();
+                showFeedbackMessage('Task deleted successfully!', 'success');
+            });
+        }
+
+        /**
+         * Calculates completion percentages for each section.
+         * @param {Array<Object>} tasks - The array of task objects.
+         * @returns {number} The completion percentage.
+         */
+        function calculateCompletionPercentage(tasks) {
+            if (tasks.length === 0) return 0;
             const completedTasks = tasks.filter(task => task.completed).length;
-            const completionPercentage = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
-
-            document.getElementById('totalTasksDisplay').textContent = totalTasks;
-            document.getElementById('completedTasksDisplay').textContent = completedTasks;
-            document.getElementById('completionPercentageDisplay').textContent = `${completionPercentage}%`;
+            return (completedTasks / tasks.length) * 100;
         }
 
-        // Function to render category progress summary
-        function renderCategoryProgressSummary() {
-            const container = document.getElementById('categoryProgressContainer');
-            container.innerHTML = ''; // Clear existing cards
+        /**
+         * Updates all charts with current data.
+         */
+        function updateCharts() {
+            const dailyMustCompleted = dailyMustTasks.filter(task => task.completed).length;
+            const lifestyleCompleted = lifestyleTasks.filter(task => task.completed).length;
+            const examOtherCompleted = examOtherTasks.filter(task => task.completed).length;
 
-            const categoryData = {};
-            categories.forEach(category => {
-                categoryData[category] = { total: 0, completed: 0 };
-            });
+            const dailyMustTotal = dailyMustTasks.length;
+            const lifestyleTotal = lifestyleTasks.length;
+            const examOtherTotal = examOtherTasks.length;
 
-            tasks.forEach(task => {
-                if (categoryData[task.category]) {
-                    categoryData[task.category].total++;
-                    if (task.completed) {
-                        categoryData[task.category].completed++;
+            const dailyMustPercentage = calculateCompletionPercentage(dailyMustTasks);
+            const lifestylePercentage = calculateCompletionPercentage(lifestyleTasks);
+            const examOtherPercentage = calculateCompletionPercentage(examOtherTasks);
+
+            // Calculate overall completion
+            const allTasks = [...dailyMustTasks, ...lifestyleTasks, ...examOtherTasks];
+            const overallCompleted = allTasks.filter(task => task.completed).length;
+            const overallTotal = allTasks.length;
+            const overallPercentage = overallTotal > 0 ? (overallCompleted / overallTotal) * 100 : 0;
+
+            // Update Task Completion by Section Chart
+            if (taskCompletionBySectionChart) {
+                taskCompletionBySectionChart.data.datasets[0].data = [dailyMustCompleted, lifestyleCompleted, examOtherCompleted];
+                taskCompletionBySectionChart.data.datasets[1].data = [dailyMustTotal, lifestyleTotal, examOtherTotal];
+                taskCompletionBySectionChart.update();
+            } else {
+                const ctx1 = document.getElementById('taskCompletionBySectionChart').getContext('2d');
+                taskCompletionBySectionChart = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Daily Must', 'Lifestyle', 'Exam & Other'],
+                        datasets: [
+                            {
+                                label: 'Completed',
+                                data: [dailyMustCompleted, lifestyleCompleted, examOtherCompleted],
+                                backgroundColor: '#3b82f6', /* Blue */
+                                borderRadius: 8,
+                                categoryPercentage: 0.7, /* Adjust bar width */
+                                barPercentage: 0.8 /* Adjust bar width */
+                            },
+                            {
+                                label: 'Total',
+                                data: [dailyMustTotal, lifestyleTotal, examOtherTotal],
+                                backgroundColor: '#ef4444', /* Red */
+                                borderRadius: 8,
+                                categoryPercentage: 0.7, /* Adjust bar width */
+                                barPercentage: 0.8 /* Adjust bar width */
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true, /* Changed to true */
+                        aspectRatio: 1.5, /* Set aspect ratio for better mobile display */
+                        indexAxis: 'x', // Vertical bars
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += context.raw;
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Sections',
+                                    font: {
+                                        size: 16,
+                                        weight: 'bold'
+                                    }
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Tasks',
+                                    font: {
+                                        size: 16,
+                                        weight: 'bold'
+                                    }
+                                },
+                                ticks: {
+                                    stepSize: 2, // Ensure ticks are integers
+                                }
+                            }
+                        }
                     }
-                }
-            });
-
-            categories.forEach(category => {
-                const total = categoryData[category].total;
-                const completed = categoryData[category].completed;
-                const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
-
-                const card = document.createElement('div');
-                // Use a different class for category cards to distinguish from filter buttons
-                card.className = 'p-4 bg-[#A7D5E5] rounded-md cursor-pointer active:bg-[#6B9DB3] active:text-white transition duration-200 ease-in-out';
-                card.innerHTML = `
-                    <p class="text-sm font-semibold text-[#003F5C]">${category}</p>
-                    <p class="text-xl font-bold text-[#003F5C]">${completed} / ${total}</p>
-                    <p class="text-xs text-[#366E8A]">${percentage}% Completed</p>
-                `;
-                card.dataset.categoryFilter = category;
-                card.addEventListener('click', (event) => {
-                    // Remove 'active-category-card' from all category cards
-                    document.querySelectorAll('#categoryProgressContainer .active-category-card').forEach(c => c.classList.remove('active-category-card'));
-                    // Add 'active-category-card' to the clicked card
-                    event.currentTarget.classList.add('active-category-card');
-
-                    currentCategoryFilter = event.currentTarget.dataset.categoryFilter;
-                    currentCompletionFilter = 'all'; // Reset completion filter when a category is selected
-                    renderTasks();
                 });
-                container.appendChild(card);
-            });
-        }
+            }
 
-
-        // Function to show report in a modal
-        function showReportModal(content, title) {
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
-            modal.innerHTML = `
-                <div class="bg-white p-6 rounded-lg shadow-xl max-w-lg w-full relative">
-                    <button class="absolute top-3 right-3 text-gray-500 active:text-gray-700 text-xl font-bold" onclick="this.closest('.fixed').remove()">&times;</button>
-                    <h2 class="text-2xl font-bold text-[#003F5C] mb-4">${title}</h2>
-                    <div class="text-[#366E8A] overflow-y-auto max-h-96">
-                        ${content}
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(modal);
-        }
-
-        // Report functions
-        function generateDailyReport() {
-            const todayString = getTodayDateString();
-            // Daily report should include all tasks due today, regardless of completion status
-            const dailyTasks = tasks.filter(task => task.originalDate === todayString);
-            const totalDaily = dailyTasks.length;
-            const completedDaily = dailyTasks.filter(task => task.completed).length;
-
-            let reportContent = `<h3 class="text-xl font-bold text-[#003F5C] mb-2">Daily Report for ${formatDateForDisplay(todayString)}</h3>`;
-            reportContent += `<p>Total Tasks: ${totalDaily}</p>`;
-            reportContent += `<p>Completed Tasks: ${completedDaily}</p>`;
-            reportContent += `<p>Completion Rate: ${totalDaily === 0 ? 0 : Math.round((completedDaily / totalDaily) * 100)}%</p>`;
-            reportContent += `<h4 class="font-semibold mt-4">Tasks:</h4><ul>`;
-            if (dailyTasks.length === 0) {
-                reportContent += `<li>No tasks for today.</li>`;
+            // Update Task Completion Rates Chart
+            if (taskCompletionRatesChart) {
+                taskCompletionRatesChart.data.datasets[0].data = [dailyMustPercentage, lifestylePercentage, examOtherPercentage];
+                taskCompletionRatesChart.options.plugins.title.text = `Task Completion Rates (${overallCompleted}/${overallTotal} - ${overallPercentage.toFixed(1)}%)`;
+                taskCompletionRatesChart.update();
             } else {
-                dailyTasks.forEach(task => {
-                    reportContent += `<li class="${task.completed ? 'task-completed' : ''}">${task.name} (${task.category}) (Due: ${task.displayDate}) - ${task.completed ? 'Completed' : 'Pending'}</li>`;
+                const ctx2 = document.getElementById('taskCompletionRatesChart').getContext('2d');
+                taskCompletionRatesChart = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Daily Must', 'Lifestyle', 'Exam & Other'],
+                        datasets: [{
+                            label: 'Completion %',
+                            data: [dailyMustPercentage, lifestylePercentage, examOtherPercentage],
+                            backgroundColor: ['#3b82f6', '#ef4444', '#22c55e'], /* Blue, Red, Green */
+                            borderRadius: 8,
+                            categoryPercentage: 0.7, /* Adjust bar width */
+                            barPercentage: 0.8 /* Adjust bar width */
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true, /* Changed to true */
+                        aspectRatio: 1.5, /* Set aspect ratio for better mobile display */
+                        indexAxis: 'y', // Horizontal bars
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                            title: {
+                                display: true,
+                                text: `Task Completion Rates (${overallCompleted}/${overallTotal} - ${overallPercentage.toFixed(1)}%)`,
+                                font: {
+                                    size: 18,
+                                    weight: 'bold'
+                                },
+                                padding: {
+                                    top: 10,
+                                    bottom: 10
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.raw.toFixed(1)}%`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'Completion %',
+                                    font: {
+                                        size: 16,
+                                        weight: 'bold'
+                                    }
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Section',
+                                    font: {
+                                        size: 16,
+                                        weight: 'bold'
+                                    }
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
                 });
             }
-            reportContent += `</ul>`;
 
-            showReportModal(reportContent, 'Daily Report');
-        }
-
-        function generateWeeklyReport() {
-            // Helper to get the start of the week (Monday) in YYYY-MM-DD format
-            function getStartOfWeek(dateString) {
-                const d = new Date(dateString);
-                const day = d.getDay(); // 0 for Sunday, 1 for Monday
-                const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday start
-                const startOfWeek = new Date(d.setDate(diff));
-                return startOfWeek.toISOString().split('T')[0];
-            }
-
-            const todayString = getTodayDateString();
-            const startOfWeekString = getStartOfWeek(todayString);
-            const endOfWeek = new Date(startOfWeekString);
-            endOfWeek.setDate(endOfWeek.getDate() + 6);
-            const endOfWeekString = endOfWeek.toISOString().split('T')[0];
-
-            const weeklyTasks = tasks.filter(task => {
-                return task.originalDate >= startOfWeekString && task.originalDate <= endOfWeekString;
-            });
-
-            const totalWeekly = weeklyTasks.length;
-            const completedWeekly = weeklyTasks.filter(task => task.completed).length;
-
-            let reportContent = `<h3 class="text-xl font-bold text-[#003F5C] mb-2">Weekly Report (${formatDateForDisplay(startOfWeekString)} - ${formatDateForDisplay(endOfWeekString)})</h3>`;
-            reportContent += `<p>Total Tasks: ${totalWeekly}</p>`;
-            reportContent += `<p>Completed Tasks: ${completedWeekly}</p>`;
-            reportContent += `<p>Completion Rate: ${totalWeekly === 0 ? 0 : Math.round((completedWeekly / totalWeekly) * 100)}%</p>`;
-            reportContent += `<h4 class="font-semibold mt-4">Tasks:</h4><ul>`;
-            if (weeklyTasks.length === 0) {
-                reportContent += `<li>No tasks for this week.</li>`;
+            // Show/hide positive day notice
+            const positiveDayNotice = document.getElementById('positive-day-notice');
+            if (overallPercentage >= 70 && overallTotal > 0) { // You can adjust this threshold
+                positiveDayNotice.classList.add('visible');
             } else {
-                weeklyTasks.forEach(task => {
-                    reportContent += `<li class="${task.completed ? 'task-completed' : ''}">${task.name} (${task.category}) (Due: ${task.displayDate}) - ${task.completed ? 'Completed' : 'Pending'}</li>`;
-                });
+                positiveDayNotice.classList.remove('visible');
             }
-            reportContent += `</ul>`;
-
-            showReportModal(reportContent, 'Weekly Report');
         }
 
-        // Function to export tasks to CSV
+        /**
+         * Generates CSV content from current tasks and triggers a download.
+         */
         function exportTasksToCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Task Name,Category of Task,Original Due Date (YYYY-MM-DD),Display Date (DD/MM/YY),Time Taken (HH:MM),Completed\n"; // Headers for tasks
+            let csvContent = `Daily Task Tracker Data - ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}\n\n`;
 
-            tasks.forEach(task => {
-                // Escape commas and wrap in double quotes if necessary for CSV
-                const taskNameEscaped = `"${task.name.replace(/"/g, '""')}"`;
-                const categoryEscaped = `"${task.category.replace(/"/g, '""')}"`;
-                const timeTakenHhMm = convertMinutesToHhMm(task.timeTaken || 0);
-                let row = `${taskNameEscaped},${categoryEscaped},${task.originalDate},${task.displayDate},${timeTakenHhMm},${task.completed ? 'Yes' : 'No'}`;
-                csvContent += row + "\n";
+            // --- Daily Must Tasks Section ---
+            csvContent += "Daily Must Tasks\n";
+            csvContent += "Task Name,Completed\n";
+            dailyMustTasks.forEach(task => {
+                csvContent += `"${task.name}",${task.completed ? 'Yes' : 'No'}\n`;
             });
+            const dailyMustPercentage = calculateCompletionPercentage(dailyMustTasks);
+            csvContent += `\nCompletion Percentage:,${dailyMustPercentage.toFixed(1)}%\n\n`;
 
-            // Add overall dashboard summary (for all tasks in the system)
-            const totalTasksOverall = tasks.length;
-            const completedTasksOverall = tasks.filter(task => task.completed).length;
-            const completionPercentageOverall = totalTasksOverall === 0 ? 0 : Math.round((completedTasksOverall / totalTasksOverall) * 100);
-
-            let totalTimeSpentMinutesOverall = 0;
-            tasks.forEach(task => {
-                totalTimeSpentMinutesOverall += (task.timeTaken || 0);
+            // --- Lifestyle Activity Section ---
+            csvContent += "Lifestyle Activity\n";
+            csvContent += "Task Name,Completed\n";
+            lifestyleTasks.forEach(task => {
+                csvContent += `"${task.name}",${task.completed ? 'Yes' : 'No'}\n`;
             });
-            const totalTimeSpentHhMmOverall = convertMinutesToHhMm(totalTimeSpentMinutesOverall);
+            const lifestylePercentage = calculateCompletionPercentage(lifestyleTasks);
+            csvContent += `\nCompletion Percentage:,${lifestylePercentage.toFixed(1)}%\n\n`;
 
-
-            csvContent += "\n"; // Add a blank line for separation
-            csvContent += "--- Overall Progress Summary (All Tasks) ---\n";
-            csvContent += `Total Tasks (All Time):,${totalTasksOverall}\n`;
-            csvContent += `Completed Tasks (All Time):,${completedTasksOverall}\n`;
-            csvContent += `Overall Completion Rate:,${completionPercentageOverall}%\n`;
-            csvContent += `Total Time Spent (All Time):,${totalTimeSpentHhMmOverall}\n`; // New line for total time
-
-            // Add category-wise progress summary
-            csvContent += "\n";
-            csvContent += "--- Category-wise Progress Summary ---\n";
-            csvContent += "Category,Total Tasks,Completed Tasks,Completion Rate\n"; // New headers for category summary
-
-            const categoryData = {};
-            categories.forEach(category => {
-                categoryData[category] = { total: 0, completed: 0 };
+            // --- Daily Exam Related and Other Tasks Section ---
+            csvContent += "Daily Exam Related and Other Tasks\n";
+            csvContent += "Task Name,Completed,Duration (minutes),Topic\n";
+            examOtherTasks.forEach(task => {
+                const duration = task.duration ? task.duration : '';
+                const topic = task.topic ? task.topic : '';
+                csvContent += `"${task.name}",${task.completed ? 'Yes' : 'No'},"${duration}","${topic}"\n`;
             });
+            const examOtherPercentage = calculateCompletionPercentage(examOtherTasks);
+            csvContent += `\nCompletion Percentage:,${examOtherPercentage.toFixed(1)}%\n\n`;
 
-            tasks.forEach(task => {
-                if (categoryData[task.category]) {
-                    categoryData[task.category].total++;
-                    if (task.completed) {
-                        categoryData[task.category].completed++;
-                    }
-                }
-            });
+            // --- Overall Summary Table ---
+            const allTasks = [...dailyMustTasks, ...lifestyleTasks, ...examOtherTasks];
+            const overallCompleted = allTasks.filter(task => task.completed).length;
+            const overallTotal = allTasks.length;
+            const overallPercentage = overallTotal > 0 ? (overallCompleted / overallTotal) * 100 : 0;
 
-            categories.forEach(category => {
-                const total = categoryData[category].total;
-                const completed = categoryData[category].completed;
-                const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
-                csvContent += `${category},${total},${completed},${percentage}%\n`; // Format as Category, Total, Completed, Percentage
-            });
+            csvContent += "Overall Task Completion Summary\n";
+            csvContent += "Section,Completed Tasks,Total Tasks,Completion Percentage\n";
+            csvContent += `"Daily Must",${dailyMustTasks.filter(task => task.completed).length},${dailyMustTasks.length},${dailyMustPercentage.toFixed(1)}%\n`;
+            csvContent += `"Lifestyle",${lifestyleTasks.filter(task => task.completed).length},${lifestyleTasks.length},${lifestylePercentage.toFixed(1)}%\n`;
+            csvContent += `"Exam & Other",${examOtherTasks.filter(task => task.completed).length},${examOtherTasks.length},${examOtherPercentage.toFixed(1)}%\n`;
+            csvContent += `"ALL SECTIONS",${overallCompleted},${overallTotal},${overallPercentage.toFixed(1)}%\n`;
 
 
-            const today = new Date();
-            const timestamp = today.getFullYear() +
-                              String(today.getMonth() + 1).padStart(2, '0') +
-                              String(today.getDate()).padStart(2, '0') + '_' +
-                              String(today.getHours()).padStart(2, '0') +
-                              String(today.getMinutes()).padStart(2, '0') +
-                              String(today.getSeconds()).padStart(2, '0');
-            const filename = `ibps_tasks_data_${timestamp}.csv`;
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", filename);
-            document.body.appendChild(link); // Required for Firefox
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'daily_tasks.csv');
+            link.style.visibility = 'hidden'; // Hide the link
+            document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link); // Clean up
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url); // Clean up the URL object
 
-            // Show confirmation message
-            const messageBox = document.createElement('div');
-            messageBox.className = 'message-box';
-            messageBox.textContent = `Data saved to ${filename}!`;
-            document.body.appendChild(messageBox);
+            showFeedbackMessage('CSV file downloaded!', 'success');
+        }
+
+        /**
+         * Displays a temporary feedback message to the user.
+         * @param {string} message - The message to display.
+         * @param {string} type - 'success' or 'error' for styling.
+         */
+        function showFeedbackMessage(message, type) {
+            const feedbackDiv = document.getElementById('copy-feedback');
+            feedbackDiv.textContent = message;
+            feedbackDiv.className = `copy-feedback visible ${type === 'error' ? 'text-red-600' : 'text-green-600'}`;
             setTimeout(() => {
-                messageBox.classList.add('show');
-            }, 10); // Small delay to trigger transition
-            setTimeout(() => {
-                messageBox.classList.remove('show');
-                setTimeout(() => messageBox.remove(), 500); // Remove after transition
+                feedbackDiv.classList.remove('visible');
             }, 3000); // Hide after 3 seconds
         }
 
-        // Event listeners and initial load
-        document.addEventListener('DOMContentLoaded', () => {
-            loadTasks();
-            renderTasks(); // Initial render for all tasks view (which calls updateFilterButtonStates)
+        /**
+         * Displays a custom confirmation modal.
+         * @param {string} message - The message to display in the modal.
+         * @param {function} onConfirmCallback - Function to execute if 'Yes' is clicked.
+         */
+        function showConfirmModal(message, onConfirmCallback) {
+            const modalOverlay = document.getElementById('confirm-modal-overlay');
+            const modalMessage = document.getElementById('confirm-modal-message');
+            const confirmYesButton = document.getElementById('confirm-modal-yes');
+            const confirmNoButton = document.getElementById('confirm-modal-no');
 
-            document.getElementById('addTaskBtn').addEventListener('click', addTask);
-            document.getElementById('updateTaskBtn').addEventListener('click', updateEditedTask); // Update button in modal
+            modalMessage.textContent = message;
+            modalOverlay.classList.add('visible');
 
-            // View selection buttons
-            document.getElementById('allTasksViewBtn').addEventListener('click', () => {
-                currentCategoryFilter = 'all'; // Reset category filter
-                currentCompletionFilter = 'all'; // Show all tasks (completed and uncompleted)
-                // Remove 'active-category-card' from all category cards
-                document.querySelectorAll('#categoryProgressContainer .active-category-card').forEach(c => c.classList.remove('active-category-card'));
-                renderTasks();
-            });
+            // Clear previous event listeners to prevent multiple calls
+            confirmYesButton.onclick = null;
+            confirmNoButton.onclick = null;
 
-            document.getElementById('completedTasksViewBtn').addEventListener('click', () => {
-                currentCategoryFilter = 'all'; // Reset category filter
-                currentCompletionFilter = 'completed'; // Show only completed tasks
-                document.querySelectorAll('#categoryProgressContainer .active-category-card').forEach(c => c.classList.remove('active-category-card'));
-                renderTasks();
-            });
+            confirmYesButton.onclick = () => {
+                onConfirmCallback();
+                hideConfirmModal();
+            };
+            confirmNoButton.onclick = () => {
+                hideConfirmModal();
+            };
+        }
 
-            document.getElementById('uncompletedTasksViewBtn').addEventListener('click', () => {
-                currentCategoryFilter = 'all'; // Reset category filter
-                currentCompletionFilter = 'uncompleted'; // Show only uncompleted tasks
-                document.querySelectorAll('#categoryProgressContainer .active-category-card').forEach(c => c.classList.remove('active-category-card'));
-                renderTasks();
-            });
+        /**
+         * Hides the custom confirmation modal.
+         */
+        function hideConfirmModal() {
+            document.getElementById('confirm-modal-overlay').classList.remove('visible');
+        }
 
 
-            // Report buttons
-            document.getElementById('dailyReportBtn').addEventListener('click', generateDailyReport);
-            document.getElementById('weeklyReportBtn').addEventListener('click', generateWeeklyReport);
+        /**
+         * Updates the entire UI.
+         */
+        function updateUI() {
+            renderTasks(dailyMustTasks, 'daily-must-tasks', 'dailyMust');
+            renderTasks(lifestyleTasks, 'lifestyle-tasks', 'lifestyle');
+            renderTasks(examOtherTasks, 'exam-other-tasks', 'examOther');
+            updateCharts();
+        }
 
-            // Save Data button
-            document.getElementById('saveDataBtn').addEventListener('click', exportTasksToCSV);
-        });
+        // Set current date
+        function setCurrentDate() {
+            const dateElement = document.getElementById('current-date');
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = today.toLocaleDateString('en-US', options);
+        }
+
+        // Initial load
+        window.onload = function() {
+            setCurrentDate();
+            updateUI();
+        };
     </script>
 </body>
 </html>
